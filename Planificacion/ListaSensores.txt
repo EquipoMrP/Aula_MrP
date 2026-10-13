@@ -1,0 +1,66 @@
+TIPOS DE SENSORES.
+
+Potenciómetros.
+    Preparar los diversos tipos y enseñar las diferenias de crecimiento y ruido
+    (Lineal y/o Logarítmico VS Conmutador y los otros "discretos")
+
+Sensores térmicos resistivos (resistencia que cambia con la temperatura)
+    Un termómetro no es tan complejo
+    Pensar si buscar enseñar diferencia entre el que sube R y baja R en base a la temperatura?
+--- PROBABLEMENTE MEREZCA MÁS LA PENA UN TERMOPAR (el de los dos cables)
+
+
+Fotorresistencias
+    No sé que más añadir. Se ilumina y pasa más o menos corriente y ya.
+-- PROBABLEMENTE MEREZCAN MÁS LA PENAS LOS "SENSORES OPTOELECTÓNICOS" (generan corriente al recibir luz)
+    
+Galgas extensiométricas
+    Si se estiran cambia algo muy poco. Depende de la galga y siempre hay que adaptarse a ella.
+-- No me parece que sea muy... impresionante. Y probablemente sea más frágil porque "¿Qué es estirar?"
+    (Mi opinión es que esta no)
+
+Sensores piezoeléctricos
+    Placas de presión.
+    Podría merecer la pena incluirlo junto a un botón y a un detector de proximidad (el botón que va por onda) para comparar.
+
+Sensores piroeléctricos
+    Son complejos
+    Pueden servir de termómetro preciso, termómetro a distancia, o cámara térmica.
+-- Lo dejaría considerado como posible extensión de cámara térmica, mejor dejar TERMOPAR de termómetro
+
+Acelerómetro
+    No hay que explicar mucho. Se puede usar de giroscopio o de... acelerómetro. Creo que mejor giroscopio.
+
+Sensores de medidas medioambientales
+    Presión, humedad, temperatura si en rango "natural" (cosas de entre 0º y 60º, +- 20ºC diría)
+
+Magnetómetro
+    Puede servir para conocer la posición en torno a los polos magnéticos de la tierra.
+    Si se combina con un Acelerómetro, precisión de ángulo prácticamente perfecta.
+
+Botones, teclados y sensores capacitivos
+    Considero que el teclado puede ir por un lado, y por el otro se comparan los otros 2 con el piezoeléctrico.
+
+----------- BOOSTER PACK -----------
+El booster pack tiene de base:
+    Termómetro y detector de infrarrojo
+    Sensor de luz
+    Medidas ambientales y altímetro (Otro termómetro, Presión atmosférica y Humedad)
+    Acelerómetro de 3 ejes
+    Magnetómetro de 3 ejes
+
+    Todos van por I2C, que ahora mismo no recuerdo que significa pero suena a que no se pueden usar todos a la vez.
+
+------------ Conclusión ------------
+
+Considero que sí:
+    - Por separado a la placa
+        Potenciómetros, Termopar (o resistencia de temperatura), Diodos para detectar luz.
+        Botones/sensores capacitivos, teclado
+    - En el booster pack
+        Acelerómetro/Magnetómetro (estaría guay que ambos la verdad)
+        Medidas ambientales
+
+Considero que puede molar:
+    - Sensor piezoeléctrico
+    - Sensor piroeléctrico
