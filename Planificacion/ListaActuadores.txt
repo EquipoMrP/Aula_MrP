@@ -1,0 +1,12 @@
+De estos sé menos y no veo ahora mismo
+
+Pantalla resisitva
+    Es la que nos dan.
+
+Servomotor
+
+Stepper
+
+Diodos Led
+
+Buzzer?
