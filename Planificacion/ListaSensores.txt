@@ -57,6 +57,11 @@ Botones, teclados y sensores capacitivos
 
 ** Por ahora tenemos varios *siempre* se puede ampliar más.
 
+*/ Acabo de caer:
+    - Sensor de agua
+    - Teclado USB (antes lo mini mencioné)
+    - Reloj por batería
+*/
 
 ----------- BOOSTER PACK -----------
 El booster pack ** de sensores ** tiene de base:
