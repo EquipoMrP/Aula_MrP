@@ -5,9 +5,8 @@
 #include "ds3231.h"
 
 /*
- * DS3231 usando directamente el controlador I2C2 hardware del TM4C1294.
- * La inicializacion de I2C2 y de sus pines PN5/PN4 se realiza en main.c.
- * No se utiliza I2C por software ni una segunda libreria de transporte.
+ * Libreria DS3231 (modulo HW-084) para TM4C1294.
+ * Usa el controlador I2C2 hardware: PN5 = SCL, PN4 = SDA (100 kHz).
  */
 #define DS3231_ADDRESS             0x68U
 #define DS3231_REG_SECONDS         0x00U
@@ -28,6 +27,22 @@
 #define DS3231_I2C_SETTLE_LOOPS    1200U
 
 static DS3231_Error s_lastError = DS3231_ERROR_NONE;
+
+/* Configura los pines PN5/PN4 y el controlador I2C2 en modo Standard (100 kHz). */
+void DS3231_Init(uint32_t sysClock)
+{
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C2);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION));
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_I2C2));
+
+    GPIOPinConfigure(GPIO_PN5_I2C2SCL);
+    GPIOPinConfigure(GPIO_PN4_I2C2SDA);
+    GPIOPinTypeI2CSCL(GPIO_PORTN_BASE, GPIO_PIN_5);
+    GPIOPinTypeI2C(GPIO_PORTN_BASE, GPIO_PIN_4);
+
+    I2CMasterInitExpClk(DS3231_I2C_BASE, sysClock, false);
+}
 
 /* Borra el flag de fin de operacion y lanza el comando. */
 static void DS3231_Control(uint32_t command)
@@ -314,17 +329,6 @@ DS3231_Error DS3231_GetLastError(void)
     return s_lastError;
 }
 
-/* Acceso directo a registros, solo para diagnostico. */
-bool DS3231_ReadRegisters(uint8_t reg, uint8_t *buffer, uint8_t length)
-{
-    return DS3231_I2CRead(reg, buffer, length);
-}
-
-bool DS3231_WriteRegisterByte(uint8_t reg, uint8_t value)
-{
-    return DS3231_WriteRegister(reg, value);
-}
-
 static uint8_t DS3231_DecToBcd(uint8_t value)
 {
     return (uint8_t)(((value / 10U) << 4) | (value % 10U));
@@ -389,17 +393,6 @@ static bool DS3231_IsValidDateTime(const DS3231_DateTime *dateTime)
     return true;
 }
 
-bool DS3231_ReadRawDateTime(uint8_t raw[7])
-{
-    if (raw == 0)
-    {
-        s_lastError = DS3231_ERROR_INVALID_ARGUMENT;
-        return false;
-    }
-
-    return DS3231_I2CRead(DS3231_REG_SECONDS, raw, 7U);
-}
-
 bool DS3231_ReadDateTime(DS3231_DateTime *dateTime)
 {
     uint8_t raw[7];
@@ -413,7 +406,7 @@ bool DS3231_ReadDateTime(DS3231_DateTime *dateTime)
         return false;
     }
 
-    if (!DS3231_ReadRawDateTime(raw))
+    if (!DS3231_I2CRead(DS3231_REG_SECONDS, raw, 7U))
     {
         return false;
     }
@@ -508,7 +501,7 @@ bool DS3231_WriteDateTime(const DS3231_DateTime *dateTime)
 
     yearOffset = (uint16_t)(dateTime->year - 2000U);
 
-    /* Registro inicial + 7 bytes, igual que en la libreria antigua. */
+    /* Registro inicial + 7 bytes. */
     buffer[0] = DS3231_REG_SECONDS;
     buffer[1] = DS3231_DecToBcd(dateTime->seconds);
     buffer[2] = DS3231_DecToBcd(dateTime->minutes);
@@ -520,26 +513,6 @@ bool DS3231_WriteDateTime(const DS3231_DateTime *dateTime)
     buffer[7] = DS3231_DecToBcd((uint8_t)(yearOffset % 100U));
 
     return DS3231_I2CWrite(buffer, 8U);
-}
-
-bool DS3231_ReadOscillatorStopFlag(bool *stopped)
-{
-    uint8_t status;
-
-    if (stopped == 0)
-    {
-        s_lastError = DS3231_ERROR_INVALID_ARGUMENT;
-        return false;
-    }
-
-    if (!DS3231_ReadRegister(DS3231_REG_STATUS, &status))
-    {
-        return false;
-    }
-
-    *stopped = ((status & 0x80U) != 0U);
-    s_lastError = DS3231_ERROR_NONE;
-    return true;
 }
 
 bool DS3231_ClearOscillatorStopFlag(void)
