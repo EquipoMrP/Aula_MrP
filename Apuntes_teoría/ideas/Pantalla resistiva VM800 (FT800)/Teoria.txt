@@ -1,0 +1,45 @@
+%% Primera pizarra (introducción a las pantallas resist.)
+Las pantallas resistivas ofrecen una forma cómoda y rápida de interacción con el usuario.
+
+*FOTO DE PANTALLA QUE USAMOS EN CLASE*
+
+
+
+%% Segunda pizarra (teoria canónica - ¿Como producen imagen?)
+
+Para evitar un sobreesfuerzo del microcontrolador principal, tiene un coprocesador encargado 
+de dibujar la pantalla con funciones propias para la interfaz.
+
+Esta pantalla está compuesta por una cantidad fija de pixeles de ancho y alto de la pantalla
+dependiendo de la resolución que tenga.
+En cada píxel se puede seleccionar un valor de rojo, verde y azul para dibujar en una gama de 
+262.144 colores distintos (:o)
+
+
+
+%% Tercera pizarra (teoría canónica - ¿Como detectan la pulsación?)
+
+Deltante de la capa que muestra la imagen se colocan las capas resistivas dedicadas a la detección de pulsación.
+
+Esta tiene 2 capas para cada eje, calculando las posiciones en X e Y de forma separada. Por ejemplo para calcular 
+la posición en Y, se colocan  
+
+
+*Imagen de la matriz con las partes cortadas, tema 6-26"
+
+
+
+
+
+%% Cuarta pizarra (ventajas + Uso .- Revisar extensión contemplar 5º pizarra)
+
+
+
+
+
+%% Demo
+Se ponen distintos widgets en la pantalla para que el alumno las pulse y juegue con ellas.
+-> Cosas tipo scroll, botones, ... Cuestion de ir añadiendo.
+-> Que haga ruidito, maybe un piano esta guay y aprovechamos el buzzer interno
+
+
