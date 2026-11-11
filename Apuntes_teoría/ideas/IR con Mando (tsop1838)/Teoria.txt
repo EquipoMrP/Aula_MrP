@@ -1,0 +1,33 @@
+
+1. ¿Cómo funciona un recibidor de señales Infra-Rojas?
+
+El mando emitirá una señal con una envolvente de 38kHz.
+La información quedaría codificada en la frecuencia de la señal misma.
+https://www.makerguides.com/ir-receiver-remote-arduino-tutorial/
+
+
+https://www.alldatasheet.com/datasheet-pdf/pdf/26604/VISHAY/TSOP1838.html
+MODELO TSOP1838
+Este recibidor en concreto simplemente leerá la señal y la transformará en pulsos eléctricos.
+Para evitar ruido y para decodificarla se tienen que tener en cuenta los siguientes puntos.
+
+    La información viene en ciclos (luz a unos 38kHz) -> Cuando se reciben "ciclos", el sensor saca HIGH, si no se reciben; LOW
+    Cuando se transmite un dato, este debe estar retransmitiéndose durante 6 o más ciclos.
+    Debe haber una pausa entre datos transmitidos de 9 o más ciclos.
+    Cada más o menos 90ms, debe haber un "descanso" de 15ms (Signal Gap Time) [Para evitar ruido]
+
+    Se transmiten datos a partir de encender durante unos 560us (unos 21 ciclos) y apagar durante N ciclos.
+    Un 1 puede ser 1 ciclo ON 3 ciclos OFF, y un cero puede ser 1 ciclo ON y 1 OFF
+    Se transmitirian a lo largo de los 38kHz unos 8 bits (puede variar, full fe)
+
+
+2. Pasos para utilizar uno
+
+    1) Activar pin como input
+    2) Medir tiempo entre pulsos recibidos <---
+        2.1) Encontrar velocidad de "ciclo"
+        2.2) Leer 1 vez por ciclo, cuando este ON contar el numero de ciclos que esta OFF
+            Cuando esté ON de nuevo, sabremos por la cantidad de ciclos el bit leído.
+        2.3) Leer el byte entero
+
+    3) Descodificar la información
