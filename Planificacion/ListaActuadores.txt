@@ -1,0 +1,26 @@
+De estos sé menos y no veo ahora mismo
+    ** Podemos intentar la mayor cantidad de todos, aunque realmente si simplificamos no hay tantos actuadores. Siempre podemos ir añadiendo conforme vayamos cayendo
+
+Pantalla resisitva
+    Es la que nos dan.
+    ** Recordemos cosas de detección de pantallas, la pantalla dan bastante juego
+
+Servomotor
+
+Stepper
+    ** Tanto el Stepper y servomotor se pueden usar para muchas cosas, explicarlo no es malo, ya le buscaremos mecanicas en el jugeo
+
+Diodos Led
+    ** Siii, tanto leds básicos como leds RGB
+
+Buzzer
+    ** Quito el ?, si no usamos el de la pantalla, usamos uno externo, pero el uso de algo de musica es necesario y muy chulo
+
+** Rele
+    ** No se como lo podríamos aprovechar pero los reles son bastante útiles
+
+** Motor DC canónico
+
+** BUA EL WIFI, servidor ethernet ya, eso sería cine
+
+** Se que hay más que nos estamos dejando, lo suyo sería implementar cuantos más mejor (o sorpresa). Muy importante, necesitaremos alimentación externa si queremos usar más de 2 de algo.

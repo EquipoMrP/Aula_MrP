@@ -1,0 +1,97 @@
+TIPOS DE SENSORES.
+
+Potenciómetros.
+    Preparar los diversos tipos y enseñar las diferenias de crecimiento y ruido
+    (Lineal y/o Logarítmico VS Conmutador y los otros "discretos")
+    ** Tengo un potenciometro deslizable (no se si funciona) y el que gira se encuentra en cualquier lado.
+
+Sensores térmicos resistivos (resistencia que cambia con la temperatura)
+    Un termómetro no es tan complejo
+    Pensar si buscar enseñar diferencia entre el que sube R y baja R en base a la temperatura?
+--- PROBABLEMENTE MEREZCA MÁS LA PENA UN TERMOPAR (el de los dos cables)
+    ** No tiene porqué ser excluyentes, se pueden poner ambos, quien sabe maybe uno para detectar la temperatura ambiente y otro para jugar con él.
+
+Fotorresistencias
+    No sé que más añadir. Se ilumina y pasa más o menos corriente y ya.
+-- PROBABLEMENTE MEREZCAN MÁS LA PENAS LOS "SENSORES OPTOELECTÓNICOS" (generan corriente al recibir luz)
+    ** Mismo que anterior.
+    ** De las Fotoresistencias me gustaría añadir la posibilidad de hacer lo que comenté de la barita y los 3 sensores de RGB.
+    
+Galgas extensiométricas
+    Si se estiran cambia algo muy poco. Depende de la galga y siempre hay que adaptarse a ella.
+-- No me parece que sea muy... impresionante. Y probablemente sea más frágil porque "¿Qué es estirar?"
+    (Mi opinión es que esta no)
+    ** Cuestión de ver la disponibilidad de esta, pero si es muy complejo no es la opción más rentable como dices.
+
+Sensores piezoeléctricos
+    Placas de presión.
+    Podría merecer la pena incluirlo junto a un botón y a un detector de proximidad (el botón que va por onda) para comparar.
+    ** Este me parece clave, esta guay si se usan varios.
+
+Sensores piroeléctricos
+    Son complejos
+    Pueden servir de termómetro preciso, termómetro a distancia, o cámara térmica.
+-- Lo dejaría considerado como posible extensión de cámara térmica, mejor dejar TERMOPAR de termómetro
+    ** Dudo que tengamos opción de rápido acceso a 1, mejor dejarlo por ahora de lado.
+
+Acelerómetro
+    No hay que explicar mucho. Se puede usar de giroscopio o de... acelerómetro. Creo que mejor giroscopio.
+    ** Por ahor acuanto menos corramos con el cacharro en las manos mejor, como dices mejor cosas de nivel o orientación.
+
+Sensores de medidas medioambientales
+    Presión, humedad, temperatura si en rango "natural" (cosas de entre 0º y 60º, +- 20ºC diría)
+    ** El clasico azulito siempre va top (DHT11).
+
+Magnetómetro
+    Puede servir para conocer la posición en torno a los polos magnéticos de la tierra.
+    Si se combina con un Acelerómetro, precisión de ángulo prácticamente perfecta.
+    ** Estaría guay explicarlo, pero para ello estaría guay tener uno.
+
+Botones, teclados y sensores capacitivos
+    Considero que el teclado puede ir por un lado, y por el otro se comparan los otros 2 con el piezoeléctrico.
+    ** No me gusta agrupar ambos a la vez, veo una clara distinción entre los botones (click - clack), interruptores, teclados tipo matriz y teclado canónico teclado.
+
+** Sensor de distancia al fallo, el clásico de los coches pa que no se choque.
+
+** Se puede considerar también como LDR, pero un infrarrojo puede ser clave (ya sea para blanco/negro o mando a distancia).
+
+** Por ahora tenemos varios *siempre* se puede ampliar más.
+
+*/ Acabo de caer:
+    - Sensor de agua
+    - Teclado USB (antes lo mini mencioné)
+    - Reloj por batería
+*/
+
+----------- BOOSTER PACK -----------
+El booster pack ** de sensores ** tiene de base:
+    Termómetro y detector de infrarrojo
+    Sensor de luz
+    Medidas ambientales y altímetro (Otro termómetro, Presión atmosférica y Humedad)
+    Acelerómetro de 3 ejes
+    Magnetómetro de 3 ejes
+
+    Todos van por I2C, que ahora mismo no recuerdo que significa pero suena a que no se pueden usar todos a la vez.
+
+    ** 1º el I2C es justo lo contrario, es complejo de programar, pero literal con 2 unidades de pines I2C (SCA y SCL) podemos controlar unos 128 elementos distintos (tiene        como 10 parejas de I2C la placa).
+    ** Es cierto que está el booster pack pero no es obligatorio su uso, siempre podemos usar los pines por separado, o sino creo recordar que las placas booster pack dejan        los pines que no usan al aire libre (esto puede ser clave aunque nos jode un poco por temas de espacio).
+
+------------ Conclusión ------------
+
+Considero que sí:
+    - Por separado a la placa
+        Potenciómetros, Termopar (o resistencia de temperatura), Diodos para detectar luz.
+        Botones/sensores capacitivos, teclado
+    - En el booster pack
+        Acelerómetro/Magnetómetro (estaría guay que ambos la verdad)
+        Medidas ambientales
+
+Considero que puede molar:
+    - Sensor piezoeléctrico
+    - Sensor piroeléctrico
+
+** Considero que si podemos dejar el booster pack de lado y hacer una placa nosotros sería goty, sino tirar de cables siempre es una opción. Si vemos que hay mucho lio le      dan por saco y full booster pack y le añadimos los otro por los pines que sobran. A priori para programar los sensores no nos importa.
+
+** Si podemos añadir cuantos más de la lista mejor, cuestión de preguntar a Perales y/o ESIBot y evaluar completitud/trabajo/tiempo/(¿necesidad?).
+
+
