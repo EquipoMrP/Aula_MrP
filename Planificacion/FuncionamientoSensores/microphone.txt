@@ -1,0 +1,20 @@
+1. ¿Cómo funciona un sensor de sonido?
+
+A grandes rasgos, hay una membrana que al recibir sonido sufre una deformación.
+Esta deformación cambia alguna característica eléctrica que se puede interpretar (como leer el cambio de R en un potenciómetro)
+Estos sensores suelen tener 4 pines; POWER, GND, ANALOG, DIGITAL.
+    - POWER y GND son obvios, son la alimentación y tierra. Suelen requerir 5V
+    - ANALOG varía su valor según la intensidad del sonido
+    - DIGITAL devuelve HIGH o LOW en base a si hay sonido o no.
+https://www.teachmemicro.com/arduino-microphone/
+https://circuitdigest.com/microcontroller-projects/interfacing-sound-sensor-with-arduino
+
+LM393
+
+Nuestro sensor tiene 3 pines. Desconozco si la salida es analog o digital.
+
+2. Uso del sensor
+    1) Leer valor del pin de salida cada ciclo de reloj
+    2) Mostrar.
+
+    Suena simple. Desconozco si se puede hacer algún tratamiento a la señal para sacar algo más interesante que la intensidad.
