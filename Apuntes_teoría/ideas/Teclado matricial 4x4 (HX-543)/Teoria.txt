@@ -1,0 +1,32 @@
+%% Primera pizarra (introducción a la matriz)
+Una forma de interactuar que tiene el usuario son con matrices de botones de membrana como estas:
+
+*Fotos de matrices*
+
+
+%% Segunda pizarra (teoria canónica - ¿Como funciona?)
+
+Realmente la magia detrás de la matriz es que tenemos varios botones interconectados entre sus pines
+
+Por ejemplo en la matriz 4x4, se usan 8 pines, 4 dedicados a las filas la cualen mandan una señal activa 
+y 4 dedicadas a las columnas que reciben la señal, cuando se pulsa un dígito se cierra el circuito y se 
+detecta la fila y columna usada.
+
+Realmente es como el juego de hundir la flota
+
+* Poner dibujo de la matriz por dentro*
+
+
+%% Tercera pizarra (ventajas + Uso .- Revisar extensión contemplar 5º pizarra)
+
+Son muy útiles cuando se necesitan muchos botones en un contexto parecido, por eso podemos encontrarlos en
+varios dispositivos, por ejemplo los móviles antiguos, telefonillos o si unimos varios, podemos formar un teclado
+completo como el que se usa con el ordenador.
+
+* Foto de los ejemplos *
+
+
+%% Demo
+Se puede hacer o un telefono y metemos detalles curiosos
+Se puede hacer un proto-hundir la flota
+

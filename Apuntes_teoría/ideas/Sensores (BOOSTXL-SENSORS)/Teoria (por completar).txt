@@ -1,0 +1,46 @@
+%% Primera pizarra (introducción al boosterpack)
+A nuestro microcontrolador se le pueden añadir distintas ampliaciones llamados "boosterpacks".
+Uno bastante útil es el Sensors Boosteroack ya que incluye varios sensores
+
+*Fotos del boosterpack*
+
+
+%% Segunda pizarra (teoria canónica - ¿Que sensores incluye?)
+Actualmente el que se está usando tiene:
+OPT3001: sensor de luz
+TMP007: sensor de Temperatura
+BME280: sensor ambiental (temperatura, presión y humedad)
+BMI160: acelerómetro 3D y giróscopo 3D
+BMM130: magnetómetro 3D
+
+*Se puede poner la imagen del tema 8- pag5*
+
+%% Tercera pizarra (El OPT3001)
+
+Este sensor mide la luz que el ojo humano puede captar (creo que es una LDR pero habría que investigar)
+
+%% Cuarta pizarra (El TMP007)
+
+Este sensor es capaz de medir la radiación infraroja del entorno, en base a esta radición podemos calcular la
+temperatura del objeto
+
+%% Quinta pizarra (El BME280)
+
+Este sensor mide tanto preción como humedad y temperatura
+
+%% Sexta pizarra (El BMI160)
+
+
+
+%% Séptima pizarra (El BMM150)
+
+
+
+%% Octava pizarra (uso)
+
+Cualquier proyecto que necesite conocer variables de su entorno le resulta muy útil este boosterpack
+
+%% Demo
+Sensores y valores, maybe algo como medidor de burbuja para el giro
+Luz maybe una bombilla
+

@@ -21,21 +21,26 @@ En cada píxel se puede seleccionar un valor de rojo, verde y azul para dibujar 
 
 Deltante de la capa que muestra la imagen se colocan las capas resistivas dedicadas a la detección de pulsación.
 
-Esta tiene 2 capas para cada eje, calculando las posiciones en X e Y de forma separada. Por ejemplo para calcular 
-la posición en Y, se colocan  
+Cada capa resistiva tiene una zona positiva y negativa, si usamos 2 tenemos la posición en el plano (X+,X-,Y+,Y-)
+
+Por ejemplo para calcular la posición en Y, se colocan Y+ a 1, Y- a 0, X- al aire y se lee el valor de la pulsación por X+,
+este valor variará según la altura que pulsemos de la pantalla.
 
 
 *Imagen de la matriz con las partes cortadas, tema 6-26"
 
 
 
-
-
 %% Cuarta pizarra (ventajas + Uso .- Revisar extensión contemplar 5º pizarra)
+Usar una pantalla resistiva nos permite integrar comunicación usuario-máquina de forma cómoda, además esta a diferencia
+de otro tipo de pantallas nos permite usarla solo con la presión no necesitando un material conductor que cierre el circuito.
+El único costo a pagar es que las capas resistivas reducen la visibilidad de la imagen, solo detecta un punto de presión 
+y es necesario calibrarlas antes de usarlas
 
+Estas se usan en muchos entornos distintos, por ejemplo en consultas médicas donde por protección y limpieza usan guantes 
+que no conducen o en pantallas de consolas como es la familia de las ds.
 
-
-
+* Fotos de consulta y de consola *
 
 %% Demo
 Se ponen distintos widgets en la pantalla para que el alumno las pulse y juegue con ellas.
