@@ -18,3 +18,33 @@ Nuestro sensor tiene 3 pines. Desconozco si la salida es analog o digital.
     2) Mostrar.
 
     Suena simple. Desconozco si se puede hacer algún tratamiento a la señal para sacar algo más interesante que la intensidad.
+
+
+%% Primera pizarra (introducción al)
+Para reaccionar a los ruidos del entorno se puede usar sensores como el micrófono 
+
+*Fotos del sensor*
+
+
+%% Segunda pizarra (teoria canónica - ¿Como funciona?)
+
+Este sensor tiene por dentro una membrana que al recibir las ondas de sonido se deforma.
+
+Esta deformación cambia algunas características eléctricas que se pueden medir e interpretar permitiendo 
+ver como varía según el sonido que detecte.
+
+En este caso el sensor que usamos puede devolver tanto la medida analógica como una señal que se activa a superar cierto umbral
+
+* No se si poner foto aquí*
+
+
+%% Tercera pizarra (ventajas + Uso)
+
+Estos sensores son muy útiles ya que permite al microcontrolador reaccionar al sonido de su entorno. Ejemplos.ejemplos
+
+* Foto de los ejemplos *
+
+
+%% Demo
+Grafiquita reactiva
+

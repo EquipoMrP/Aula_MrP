@@ -31,3 +31,33 @@ Para evitar ruido y para decodificarla se tienen que tener en cuenta los siguien
         2.3) Leer el byte entero
 
     3) Descodificar la información
+
+
+%% Primera pizarra (introducción al IR)
+Un sensor infrarrojo es capaz de detectar las señales dentro de espectro infrarrojo.
+Si sabemos como son las señales que enviamos podemos enviar información sin necesidad de cables.
+
+*Foto del modulo* 
+
+%% Segunda pizarra (teoria canónica - ¿Como funciona?)
+
+Por una parte el mando envía una señal infrarroja a una frecuencia determinada, por otro lado 
+el sensor lee la señal a la misma frecuencia y la transforma en pulsos eléctricos.
+
+Cada botón genera distintos pulsos que serán cadenas de ceros y unos, de esta forma podemos 
+diferenciar las diferentes señales que manda el mando
+
+*Tabla con las señales maybe*
+
+
+%% Tercera pizarra (ventajas + Uso)
+
+Un mando a distancia puede venir muy bien si queremos mandar instrucciones lejos del dispositivo
+
+Por ejemplo, el mando a distancia que se usa en la tele, imagina levantarte para darle a los botones
+
+* Foto del microach*
+
+
+%% Demo
+Grafiquita reactiva

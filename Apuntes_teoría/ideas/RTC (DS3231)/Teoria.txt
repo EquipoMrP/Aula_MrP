@@ -1,0 +1,27 @@
+
+%% Primera pizarra (introducción al reloj)
+Cuando se apaga un dispositivo este queda completamente dormido, perdiendo o desincronizando la hora en la que se encontraba
+Para solucionar este problema tenemos al reloj en tiempo real con batería
+
+*Foto del modulo*
+
+^ Fijate en la batería ^
+
+%% Segunda pizarra (teoria canónica - ¿Como funciona?)
+
+Un RTC realmente es un circuito que nunca para de ejecutarse. Este tiene una batería la cual permite que la
+lógica de conteo de bajo consumo nunca llegue a parar de contar, quedando el módulo preparado siempre para preguntarle
+por la hora exacta en la que nos encontramos (siempre que tenga batería la pila)
+
+
+
+%% Tercera pizarra (ventajas + Uso)
+
+Usar RTC resulta muy beneficioso para un proyecto si buscamos que tenga un buen conteo del paso del tiempo, 
+por ejemplo, alarmas y relojes necesitarán este módulo si no quieren ponerlos en hora cada vez que lo inicien.
+
+* Foto del microach*
+
+
+%% Demo
+Grafiquita reactiva
