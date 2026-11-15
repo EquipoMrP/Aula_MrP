@@ -46,7 +46,12 @@ Gracias a su versatilidad, estos sensores son\n
 muy utilizados en interfaces tactiles; ya\n
 que pueden ser de pequenas dimensiones son\n
 faciles de ocultar, caracteristica que\n
-aprovechan las pantallas tactiles modernas.
+aprovechan las pantallas tactiles modernas. 
+
+Cabe notar que solamente se utilizan paran\n
+detectar pulsaciones, sino que tiene\n
+aplicaciones industriales para medir el nivel\n
+de un liquido o detectar el paso de objetos.
 
 * Poner todas las opciones de sensores que hay tipo galería de fotos tema 6 - pag 14 *
 
