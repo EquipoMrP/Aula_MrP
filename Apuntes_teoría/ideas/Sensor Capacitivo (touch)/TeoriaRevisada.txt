@@ -1,0 +1,55 @@
+
+%% Primera parte (introducción al sensor capacitivo)
+Los sensores capacitivos detectan cuando se les\n
+acercan ciertas superficies, como los dedos.
+
+*Fotos del sensor que tenemos en la placa*
+
+
+%% Segunda parte (teoria canónica - ¿Como funciona?)
+
+Los sensores capacitivos constan de un\n
+oscilador de ondas electromagneticas y un\n
+circuito receptor.\n\n
+
+Al acercar el dedo u otra superficie para la\n
+que el sensor este preparado, actuamos sobre el\n
+circuito como si anadieramos una capacidad\n
+parasita que modifica la recepcion de las\n
+ondas emitidas. 
+
+Estudiando su variacion el sensor determina si se encuentra "pulsado" o no.
+
+* No se si poner foto aquí, maybe tema 6 pag 17*
+
+
+%% Tercera parte (ventajas)
+
+Los sensores capacitivos suponen un elegante\n
+sustituto de botones mecanicos, ya que al\n
+carecer de partes mecanicas son mas robustos y\n
+faciles de limpiar.\n\n
+
+La principal desventaja que poseen es su rango\n
+de funcionamiento; si la temperatura, humedad o\n
+incluso las caracteristicas de la superficie\n
+varian ligeramente, pierden fiabilidad.\n
+Por ejemplo, un dedo mojado sera mas dificil\n
+de detectar que uno seco.\n
+Afortunadamente, estos sensores tienen un\n
+funcionamiento sencillo, y por tanto no es\n
+dificil encontrar gran variedad de modelos que\n
+se ajusten a la aplicacion deseada.
+
+%% Cuarta parte (Uso)
+Gracias a su versatilidad, estos sensores son\n
+muy utilizados en interfaces tactiles; ya\n
+que pueden ser de pequenas dimensiones son\n
+faciles de ocultar, caracteristica que\n
+aprovechan las pantallas tactiles modernas.
+
+* Poner todas las opciones de sensores que hay tipo galería de fotos tema 6 - pag 14 *
+
+
+%% Demo
+Cuando toques el botón suenan ruidos distintos y maybe aparecen cosas distintas por pantalla
