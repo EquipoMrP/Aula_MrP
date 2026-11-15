@@ -1,0 +1,77 @@
+%% Primera pizarra (introducción a las pantallas resist.)
+Las pantallas resistivas ofrecen al usuario una forma cómoda y rápida de interacción con el sistema.
+
+*FOTO DE PANTALLA QUE USAMOS EN CLASE*
+
+
+
+%% Segunda parte (teoria canónica - ¿Como producen imagen?)
+
+Para evitar un sobrecargar del microcontrolador\n
+principal, la pantalla tiene un coprocesador\n
+integrado, encargado de dibujar la pantalla con\n
+funciones propias para la interfaz.\n\n
+
+La resolución de las pantallas consiste en la\n
+cantidad de pixeles a lo ancho y alto que\n
+poseen y no de sus dimensiones físicas.\n
+A cada píxel se le debe proporcionar un valor\n
+de rojo, verde y azul, permitiendo dibujar en una\n
+gama de 262.144 colores distintos.\n
+(Este rango de colores depende del rango de\n
+valores que acepten el rojo, verde y azul,\n
+usualmente de 0 a 255)
+
+
+
+%% Tercera parte (teoría canónica - ¿Como detectan la pulsación?)
+
+Por delante de la capa en la que muestra la\n
+imagen se colocan láminas resistivas para la\n
+detección de pulsación.\n
+
+Cada una de estas capas tienen un terminal\n
+positivo y otro negativo, por tanto si\n
+utilizamos dos podemos obtener la posición en\n
+el plano (X+,X-,Y+,Y-)\n\n
+
+Por ejemplo, para calcular la posición en el\n
+eje Y se colocan los terminales 'Y+' a 1, 'Y-'\n
+a 0 y 'X-' al aire, y se lee el valor de la\n
+pulsación por el terminal 'X+'; este valor\n
+variará según la altura a la que pulsemos de\n
+la pantalla.
+
+*Imagen de la matriz con las partes cortadas, tema 6-26"
+
+
+
+%% Cuarta parte (Ventajas/Desventajas)
+Usar una pantalla resistiva nos permite\n
+integrar comunicación usuario-máquina de forma\n
+cómoda y elegante, distinguiendose de otras\n
+pantallas táctiles gracias a que podemos\n
+utilizarla solo con presionarla y no\n
+necesitando unas condiciones de uso que\n
+permitan que un sensor capacitivo funcione.\n\n
+
+El costo a pagar es que las capas resistivas\n
+reducen la visibilidad de la imagen, solo son\n
+capaces de detectar un punto de presión y es\n
+necesario calibrarlas antes de usarlas.
+
+%% Quinta parte (Uso)
+Estas se usan en muchos entornos distintos;\n
+en consultas médicas, donde por protección y\n
+limpieza usan guantes y esterilizan el equipo,\n
+o en pantallas de videoconsolas como la familia\n
+de las ds.
+
+* Fotos de consulta y de consola *
+
+%% Demo
+Se ponen distintos widgets en la pantalla para que el alumno las pulse y juegue con ellas.
+-> Cosas tipo scroll, botones, ... Cuestion de ir añadiendo.
+-> Que haga ruidito, maybe un piano esta guay y aprovechamos el buzzer interno
+
+
