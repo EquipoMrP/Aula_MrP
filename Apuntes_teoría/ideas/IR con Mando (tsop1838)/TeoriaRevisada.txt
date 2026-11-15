@@ -1,0 +1,112 @@
+%% Primera pizarra (introducción al IR)
+Un sensor infrarrojo es capaz de detectar la\n
+radiacion infrarroja, permitiendonos comunicar\n
+informacion de forma remota.
+
+*Foto del modulo* 
+
+%% Segunda pizarra (teoria canónica - ¿Como funciona?)
+
+Antes de explicar el sensor infrarrojo, merece\n
+la pena hablar del emisor de infrarrojos,\n
+actuador comunmente usado en mandos a\n
+distancia.\n
+Constan de un LED infrarrojo y un\n
+microcontrolador que modula la informacion que\n
+va a emitir el LED.\n
+La informacion deseada se convierte en una serie 
+de pulsos de una onda dentro del espectro\n
+infrarrojo, normalmente en torno a los 40kHz.\n\n
+
+Un sensor de infrarrojos es un sensor preparado\n
+para detectar dichos pulsos en dichas ondas\n
+electromagneticas.\n
+En su forma mas basica, la salida del sensor\n
+cambia entre HIGH y LOW segun va recibiendo los\n
+pulsos, recayendo la tarea de desencriptar la\n
+infromacion sobre el resto del sistema.\n\n
+
+Cada emisor tiene su propia configuracion para\n
+la codificacion de la informacion, y por tanto\n
+es necesario conocer el emisor ademas del\n
+receptor.
+
+*Tabla con las señales maybe*
+
+
+%% Tercera parte (ventajas)
+
+Uno de las mayores ventajas de este metodo de\n
+comunicacion es que es completamente invisible\n
+al ojo humano y no requiere que los sistemas en\n
+comunicacion esten conectados por cables.\n\n
+
+El problema, sin embargo, viene de que todo\n
+objeto con temperatura emite radiacion\n
+infrarroja.\n
+Es muy importante que nuestro modelo de sensor\n
+tenga un filtro, porque si no va a captar mucho\n
+ruido externo.\n
+Por ultimo, la radiacion infrarroja no posee\n
+gran potencia, y por tanto el rango de\n
+comunicacion de estos dispositivos disminuye\n
+considerablemente cuanta mayor precision se\n
+quiera.
+
+%% Cuarta parte (Uso)
+
+En el dia a dia podemos ver esta teconologia\n
+aplicada en mandos de garaje, llaves de\n
+vehiculos o mandos de television.\n
+En el ambito industrial es imprescindible\n
+para garantizar la seguridad del trabajador al\n
+manipular cierta maquinaria.
+
+
+* Foto del microach*
+
+
+%% Demo
+Grafiquita reactiva
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1. ¿Cómo funciona un recibidor de señales Infra-Rojas?
+
+El mando emitirá una señal con una envolvente de 38kHz.
+La información quedaría codificada en la frecuencia de la señal misma.
+https://www.makerguides.com/ir-receiver-remote-arduino-tutorial/
+
+
+https://www.alldatasheet.com/datasheet-pdf/pdf/26604/VISHAY/TSOP1838.html
+MODELO TSOP1838
+Este recibidor en concreto simplemente leerá la señal y la transformará en pulsos eléctricos.
+Para evitar ruido y para decodificarla se tienen que tener en cuenta los siguientes puntos.
+
+    La información viene en ciclos (luz a unos 38kHz) -> Cuando se reciben "ciclos", el sensor saca HIGH, si no se reciben; LOW
+    Cuando se transmite un dato, este debe estar retransmitiéndose durante 6 o más ciclos.
+    Debe haber una pausa entre datos transmitidos de 9 o más ciclos.
+    Cada más o menos 90ms, debe haber un "descanso" de 15ms (Signal Gap Time) [Para evitar ruido]
+
+    Se transmiten datos a partir de encender durante unos 560us (unos 21 ciclos) y apagar durante N ciclos.
+    Un 1 puede ser 1 ciclo ON 3 ciclos OFF, y un cero puede ser 1 ciclo ON y 1 OFF
+    Se transmitirian a lo largo de los 38kHz unos 8 bits (puede variar, full fe)
+
+
+2. Pasos para utilizar uno
+
+    1) Activar pin como input
+    2) Medir tiempo entre pulsos recibidos <---
+        2.1) Encontrar velocidad de "ciclo"
+        2.2) Leer 1 vez por ciclo, cuando este ON contar el numero de ciclos que esta OFF
+            Cuando esté ON de nuevo, sabremos por la cantidad de ciclos el bit leído.
+        2.3) Leer el byte entero
+
+    3) Descodificar la información
+
+
+
