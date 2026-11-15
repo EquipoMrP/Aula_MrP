@@ -1,0 +1,65 @@
+
+%% Primera pizarra (introducción al reloj)
+Los relojes en tiempo real (RTC) miden el\n
+tiempo absoluto, independienteme de si el\n
+sistema se apaga o no en algun momento.
+
+*Foto del modulo*
+
+^ Fijate en la batería ^
+
+%% Segunda parte (teoria canónica - ¿Como funciona?)
+
+Un RTC es un circuito simple, constando de un\n
+oscilador con una frecuencia fija y un\n
+microcontrolador que contea las oscilaciones y\n
+determina el tiempo en base a ello.\n\n
+
+Su utilidad parte de que posee una bateria\n
+interna, la cual permite que siga funcionando\n
+aun cuando se corta la alimentacion del resto\n 
+del sistema. Esto le permite al circuito\n
+principal calibrar su reloj interno simplemente\n
+leyendo el valor del RTC.
+
+
+%% Tercera parte (Ventajas/Desventajas)
+
+El consumo de este circuito es pequeno,\n
+gastando poca energia de la pila, resultando\n
+en un mantenimiento casi nulo.\n\n
+
+El oscilador es un oscilador de cristal,\n
+tipicamente cuarzo, preparado para trabajar\n
+dentro de un rango de temperaturas, del que si\n
+se sale su medida de tiempo pierde precision.\n
+Ademas, los cristales envejecen, variando su\n
+frecuencia de oscilacion.\n
+
+Aun asi, existen diversos modelos de RTC,\n
+muchos de ellos preparados para enfrentarse\n
+a estos problemas.
+
+
+%% Cuarta parte (Uso)
+Usar RTC resulta imprescindible para proyectos\n
+que requieren un seguimiento preciso del paso\n
+del tiempo.\n\n
+
+Como ejemplos principales, aquellos sistemas que\n 
+deban incorporar alarmas y relojes, como los\n
+microondas, ordenadores u hornos industriales.\n\n
+
+Es importante notar que aun si unicamente se\n
+miden intervalos de tiempo y no tiempo absoluto\n
+estos sensores no pierden relevancia; en la\n
+comunicacion entre sistemas diferentes o en\n
+senales que deben viajar largas distancias\n
+suelen producirse retrasos, que aun siendo\n
+pequenos, pueden ser criticos.
+
+* Foto del microach*
+
+
+%% Demo
+Grafiquita reactiva
