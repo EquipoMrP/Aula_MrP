@@ -1,0 +1,36 @@
+%% Primera pizarra (introducción al sensor)
+Los sensores ultrasonido nos permiten medir distancias de forma sencilla y efectiva.
+
+*TIPO FOTO DEL SENSOR*
+
+^ Fijate en los "ojitos" que trae ^
+
+%% Segunda pizarra (teoria canónica - ¿Como funciona?)
+
+Este sensor dispone de un emisor y un receptor de ondas de ultrasonido, son facilmente reconocibles por parecer "ojos" del sensor. En cierta manera lo son.
+
+El emisor emite una onda ultrasonica y se inicia un contador.
+La onda viaja hasta llegar a un objeto, y rebota de vuelta al sensor, donde es captada por el receptor.
+Conociendo el tiempo de transito y la forma de la onda recibida podemos calcular la distancia hasta el objeto.
+
+* Poner dibujp de ej onda o poner la formulita de la distancia *
+
+
+%% Tercera pizarra (ventajas + Uso .- Revisar extensión contemplar 5º pizarra)
+
+Tienen un funcionamiento sencillo y un coste de produccion barato, por tanto son comunmente utilizados en proyectos sencillos o para la toma de medidas de distancia en entornos controlados o donde importe menos la precision.
+
+Una de las principales desventajas de esta clase de medida de distancia es que si la superficie del objeto esta angulada en una direccion que no apunte al objeto, la precision de la medida disminuye.
+Para solventar este problema se pueden bucar sensores de mayor gama, o desplazarse a otra clase de sensores de distancia, como los LIDAR; sensores de funcionamiento similar pero que utilizan radiacion electromagnetica.
+
+%% Cuarta parte (Uso)
+Esta clase de sensores se encuentra en multitud de sistemas, uno de los mas comunes siendo la camara trasera de los automoviles.
+Tambien es el tipo de sensor de distancia preferido por muchos proyectos caseros.
+
+* Foto de camara marcha atrás del coche y tipi coche proyectos *
+
+
+%% Demo
+Se puede hacer o un teremin, que usa la distancia para reproducir un sonido distinto
+o sensor devuelve datos.ya, es más sencillo
+

@@ -1,0 +1,24 @@
+%% NOMBRE
+Joystick
+
+%% Primera pantalla
+Los joystick son comodas maneras de introducir un control manual.
+
+%% Segunda pantalla (Caracteristicas)
+Los joystick son sensores de posicion angular que consisten en multitud de potenciometros.
+
+Un potenciometro es una resistencia variable, tomando un desplazamiento lineal o angular y ajustando fisicamente una resistencia.
+Pueden tener un comportamiento lineal o uno exponencial, esta ultima siendo la mas comun.
+Como un potenciometro variable por angulo nos dice el angulo alrededor del eje en el que este colocado, utilizando multiples podemos medir la posicion angular respecto mas de un angulo.
+Los joystick mas comunes utilizan los ejes X e Y, aunque algunos llegan a utilizar el Z tambien.
+
+Por ultimo, algunos joystick incorporan un pulsador, un mecanismo que al presionarlo abre o cierra un circuito.
+
+Combinando los multiples potenciometros y el pulsador, y utilizando una pieza que te permita accionar todos los sensores al mismo tiempo, se obtiene un joystick.
+
+%% Tercera pantalla (Ventajas/Desventajs)
+Este sensor es intuitivo y sencillo de utilizar, por tanto es optimo para interfaces humano maquina.
+Su principal problema viene del ruido propio de los potenciometros, que solo va empeorando hasta llegar a falsear una medida en la posicion de reposo.
+
+%% Cuarta pantalla (Uso)
+Es muy utilizado en cualquier clase de mando, ya que te permite con un dedo controlar multiples variables.

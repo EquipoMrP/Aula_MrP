@@ -1,0 +1,106 @@
+%% NOMBRE:
+Sensors Boosterpack
+
+%% Primera parte (introducción al boosterpack)
+A nuestro microcontrolador se le pueden añadir distintas ampliaciones llamados "boosterpacks".
+Uno bastante útil es el Sensors Boosterpack ya que incluye diversos sensores.
+
+*Fotos del boosterpack*
+
+
+%% Segunda parte (teoria canónica - ¿Que sensores incluye?)
+El Sensors Boosterpack contiene:
+OPT3001: Sensor de luz
+TMP007: Sensor de Temperatura
+BME280: Sensor ambiental (temperatura, presión y humedad)
+BMI160: Acelerómetro 3D y giróscopo 3D
+BMM130: Magnetómetro 3D
+
+*Se puede poner la imagen del tema 8- pag5*
+
+--SALTO DE PAGINA--
+- OPT3001
+Sensor de intensidad luminosa calibrado para captar la luz con una respuesta espectral casi identica a la del ojo humano.
+Es capaz de medir luz dentro del espectro visible y tiene una alta reduccion del espectro infrarrojo.
+
+El sensor consiste en un fotodiodo conectado a un amplificador y un convertidor analogico digital.
+Los fotodiodos son diodos con la union PN enriquecida con metales que fomentan que al recibir un foton se genere un par electron-hueco, provocando una diminuta corriente.
+
+-- SALTO DE PAGINA?--
+
+- TMP007
+Sensor termopila de infrarrojos preparado para medir la temperatura de un objeto a distancia, sin tocarlo.
+La termopila integrada absorbe la energia infrarroja emitida por el objeto visible y genera un voltaje que luego se traduce a un valor digital.
+
+Una termopila es un transductor que transforma energia termica en electrica, consistiendo en una serie de termopares conectados en cascada.
+Cada termopar, dos cables de metales termoconductores diferentes soldados, generara una leve diferencia de tension en base a la diferencia de temperatura entre ambos metales gracias al efecto Seeback.
+Al colocarlos en serie, esta diferencia de voltaje aumenta considerablemente, permitiendonos medir la diferencia de temperatura con menor necesidad de adaptacion.
+
+Es importante notar que mide diferencias de temperatura, no temperatura absoluta.
+Requiere establecer su propia temperatura interna, y en base a ello estima la temperatura absoluta.
+Para esto, periodicamente la estima partiendo del ultimo valor medido, o del de calibracion al inicializarse.
+
+-- Salto de pagina --
+
+- BME280
+Sensor de medidas ambientales, una combinacion de sensores digitales de temperatura, presion y porcentaje de humedad.
+
+El sensor de presion es un barometro absoluto, utilizando un sensor piezoelectrico cuya resistencia varia con la presion aplicada.
+La temperatura la mide con fotodiodo calibrado para radiacion termica.
+Por ultimo, el porcentaje de humedad lo mide monitorizando la variacion de capacidad en un condensador, que varia con la humedad ambiental.
+
+
+-- Salto de pagina --
+
+- BMI160
+Sensor de medidas inerciales compuesto de un acelerometro de tres ejes y un giroscopio.
+
+El giroscopio trata de una rueda loca montada en un gimbal, pudiendo rotar libremente en cualquier direccion.
+Cuando la estructura rota, esta vibra, y eso se mide con un sensor piezoelectrico y se traduce a la velocidad angular de cada eje.
+
+El acelerometro consiste en una lijera masa sostenida mediante estructuras elasticas enganchadas a partes de un condensador.
+Al haber una aceleracion, la masa se desplaza, moviendo la estructura y afectando a la capacitancia, esta se puede luego medir.
+
+-- Salto de pagina --
+
+- BMM150
+Este ultimo sensor es un magnetometro de tres ejes, es decir, mide su rotacion gracias al campo magnetico.
+Internamente trae un acelerometro de 3 ejes complementario.
+
+El fundamento del sensor geomagnetico se basa en la tecnologia de Bosch; 'FlipCore'.
+Se tienen circuitos representando los ejes X, Y y Z, todos ellos sensibles al campo magnetico terrestre.
+Al cambiar la orientacion, cambia el flujo magnetico, y por tanto cambia la salida de cada uno de los circuitos.
+Cada vez que se va a tomar una medida, se toma una medida con la corriente de los circuitos fluyendo en un sentido, y otra medida en sentido contrario. A partir de estos resultados se estima la orientacion. 
+
+
+
+%% Tercera parte (Ventajas desventajas)
+- OPT3001
+La intencion de este sensor es la de medir la luz como lo haria un ojo humano, cosa que nos permite utilizarlo para crear experiencias de iluminacion ideales.
+El hecho de que rechaze la radiacion infrarroja permite que sea util aun en espacios poco iluminados pero con radiacion IR, cosa que otros sensores de luz mas comunes no pueden hacer.
+Intentar utilizar este sensor fuera de este rango de uso conllevara a resultados poco utiles; por ejemplo no va a medir de manera veridica la intensidad de una luz, sino la intensidad que percibe un ojo humano.
+
+- TMP007
+Este sensor es complicado de utilizar, pues requiere una calibracion precisa y un buen conocimiento de las ecuaciones que rigen su comportamiento para poder traducir su salida.
+A cambio, es un sensor de buena precision para la toma de temperaturas sin contacto, recomendado para monitorizar baterias, ordenadores o impresoras laser.
+
+- BME280
+El BME260 tiene buena precision en todos las medidas dentro de un rango de funcionamiento normal, en condiciones ambientales y no dentro de un horno o una piscina.
+Su intencion es la de su aplicacion en el control necesario en domotica.
+
+- BMI160
+Esta unidad de medidas ha sido preparada con la intencion de tener un consumo minusculo, pudiendose incluso complementar con un magnetometro externo para ayudar a su calculo y reducir aun mas su consumo.
+Esta pensado para integrarse a telefonos u otros accesorios electronicos.
+
+- BMM150
+Gracias a su bajo consumo y a su velocidad, se utiliza para calibrar acelerometros o como giroscopio para dispositivos moviles.
+Su principal limitacion es que su rango no es infinito, y cuando supera un limite simplemente devuelve ese valor limite.
+
+%% Octava pizarra (uso)
+En definitiva, este boosterpack contiene una gran cantidad de sensores, todos ellos preparados para trabajar en condiciones similares a nuestro dia a dia.
+Esto los hace muy buenos para cualquier aplicacion domestica, o incluso para la ensenanza.
+
+%% Demo
+Sensores y valores, maybe algo como medidor de burbuja para el giro
+Luz maybe una bombilla
+

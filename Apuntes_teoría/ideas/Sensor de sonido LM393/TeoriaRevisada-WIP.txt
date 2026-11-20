@@ -5,21 +5,78 @@ el nivel de ruido y analizar ondas de sonido.
 *Fotos del sensor*
 
 
-%% Segunda pizarra (teoria canónica - ¿Como funciona?)
+%% Segunda parte (teoria canónica - ¿Como funciona?)
 
-Este sensor tiene por dentro una membrana que al recibir las ondas de sonido se deforma.
+Los sensores de sonido tienen multitud de\n
+variaciones, destacando entre ellas las\n 
+siguientes:\n
 
-Esta deformación cambia algunas características eléctricas que se pueden medir e interpretar permitiendo 
-ver como varía según el sonido que detecte.
+1. Microfono de carbono: El microfono consiste\n
+en particulas de carbon formando una\n
+resistencia. La onda de sonido las comprime,\n
+variando su valor de forma apreciable.\n
 
-En este caso el sensor que usamos puede devolver tanto la medida analógica como una señal que se activa a superar cierto umbral
+2. Microfono 'ribbon': Se tienen dos imanes con\n
+una cinta de metal en medio. Al llegar el\n
+sonido, la cinta oscila y el campo magnetico\n
+fluctua en consecuencia.\n
+
+3. Basado en un sensor piezoelectrico: La onda\n
+de presion afecta a un sensor piezoelectrico,\n
+deformandolo y por tanto modificando sus\n
+propiedades electricas.\n
+
+4. Microfono 'electret': Una membrana de\n
+material conductor se posiciona enfrente de\n
+otra, formando una capacitancia. Al deformarse\n
+la membrana, la C cambia de manera apreciable.\n\n
+
+
+El sensor que utilizamos en este proyecto es\n
+uno basado en microfono electret.
 
 * No se si poner foto aquí*
 
 
+%% Tercera parte (Ventajas/Desventajas)
+
+Cada tipo de sensor de sonido tiene sus\n
+propias ventajas y desventajas;\n
+
+Los microfonos de carbono requieren poca\n
+adaptacion de la salida y son duraderos,\n
+pero debido a su propia natrualeza, se pueden\n
+producir picos aleatoriamente o incluso dejar\n
+de funcionar correctamente, siendo necesario\n
+sacudirlo para separar los granos.\n
+
+Los microfonos ribbon suelen poder escuchar a\n
+una mayor frecuencia, pero son mas delicados y\n
+su salida suele requerrir amplificacion.\n
+
+Los basados en sensor piezoelectrico pueden\n
+escuchar a traves de superficies solidas o\n
+sumergidos en agua, pero son casi incapaces de\n
+escuchar sonido que viaje por el aire.\n
+
+Y sensores como el nuestro, basado en electret,\n
+son baratos y sencillos de usar. Versatiles,\n
+con capacidad de trabajar en frecuencias altas,\n
+pero frecuentemente distorsionando el audio.\n
+Son el tipo de sensor de sonido mas utilizado.\n\n
+
+Cada tipo de sensor de sonido es apto para unas\n
+circustancias concretas, siendo importante\n
+conocer el problema de antemano para saber\n
+cual utilizar.
+
 %% Tercera pizarra (ventajas + Uso)
 
-Estos sensores son muy útiles ya que permite al microcontrolador reaccionar al sonido de su entorno. Ejemplos.ejemplos
+Los sensores de sonido, en especial los\n
+basados en electret, son utilizados en gran\n
+variedad de ambitos.\n
+Deteccion de personas, grabacion de sonidos,\n
+analisis de onda, deteccion de ruido, etc.\n
 
 * Foto de los ejemplos *
 
