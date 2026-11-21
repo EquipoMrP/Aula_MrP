@@ -1,0 +1,7 @@
+
+Programa de demostracion del uso de un sensor de sonido.
+
+Para demostrar que el sensor de sonido puede funcionar para detectar ruido por encima de un límite,
+en este programa dibujar a Mr. P en su cama quedandose dormido.
+Al hacer un sonido fuerte, el sensor lo detecta, traduciendose a Mr. P despertandose sobresaltado.
+Al poco tiempo, volvera a dormirse.

@@ -1,0 +1,11 @@
+
+Esta funcion sirve de demostracion del uso de un sensor de infrarrojos.
+
+El usuario dispondra de un mando de control remoto y el sistema escuchara la señal que el usuario transmita.
+Una vez se recibe la señal, se traduce y se determina la accion a realizar.
+
+Este programa dibuja a Mr. P, y al pulsare a los botones realiza cambios.
+Los botones 0 a 9 ejecutan una animacion en concreto.
+Los botones * y # le quitan o ponen las gafas y ciclan por las emociones disponibles.
+Las flechas te permiten variar el R, G y B de la ropa de Mr. P, permaneciendo este efecto de forma permanente. La flecha de abajo reincia el color a gris.
+Por ultimo, el boton de OK activa o desactiva la visibilidad del cuerpo de Mr. P.

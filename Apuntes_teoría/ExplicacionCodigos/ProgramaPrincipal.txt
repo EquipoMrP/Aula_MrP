@@ -1,0 +1,17 @@
+
+Este programa es el que rige el Aula de Mr P.
+
+Nos da la opcion de elegir entre minijuegos y lecciones.
+Las lecciones tienen explicaciones preparadas hablando de todos los sensores que se han utilizado, e incluye un programa de demostracion para cada uno al final.
+Los minijuegos se van sucediendo aleatoriamente, ganando puntos por aqullos que se completen de forma satisfactoria, y perdiendo vida por los que no.
+
+Al seleccionar lecciones, se pasa a un menu con el nombre de los sensores y botones para seleccionarlos.
+Hay un boton de regreso a la pantalla inicial, y dos para cambiar de pagina, ya que no caben todos los sensores en una sola pantalla.
+Al seleccionar uno de los sensores, se pasa a una explicacion organizada por Introduccion, Caracteristicas, Ventajas y Desventajas, y Uso.
+Cada seccion tiene texto de longitud variable, que si se sale de la pantalla puedes navegar entre multiples paginas de la seccion en concreto.
+Tras la seccion de Uso, se pasa a una demostracion particular del sensor. Estos programas quedan detallados en sus propios documentos.
+
+Al seleccionar juegos, se presenta una pantalla preguntando si quieres proceder o volver a la pantalla anterior.
+Al proceder, se selecciona aleatoriamente un programa de minijuego y se ejecuta hasta que se determine el resultado.
+Tras esto, se pasa a una pantalla donde te dice si el usuario ha acertado o fallado, y detallando el numero de vidas restantes y puntos actuales.
+En esta ultima pantalla hay una ocpion de regresar a la pantalla inicial, o seguir jugando, aunque esta ultima desaparece si el usuario pierde todas sus vidas.

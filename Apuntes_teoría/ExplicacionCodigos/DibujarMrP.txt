@@ -1,0 +1,8 @@
+
+DibujarMrP es una funcion axuliar que le dice a la pantalla todas las instrucciones necesarias para dibujar a Mr. P.
+Mr. P es un monigote que hace de mascota del proyecto, como profesor del aula donde puedes aprender.
+
+La funcion recibe las coordenadas donde dibujarlo, su estado de animo, si lleva gafas o no, si dibujar su cuerpo o no, y qué animación realiza.
+En base a eso, gracias a una serie de instrucciones con condicionales, se dibuja a Mr. P.
+
+El color de la ropa puede variar, pero eso se gestiona con una variable global.
