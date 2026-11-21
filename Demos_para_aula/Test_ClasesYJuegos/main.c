@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 
 
 #include "driverlib2.h"
@@ -94,6 +95,16 @@ volatile int escribiendo=0; // Monitoriza si estamos escribiendo texto
 //volatile char dummy[] = "En un lugar de la mancha de cuyo nombre no quiero acordarme, vivia un hidalgo de aquellos de lanza en astillero, rocin flaco y galgo corredor.\nVa una olla de algo mas vaca que carnero, salpicon las mas noches, duelos y quebrantos los sabado, lantejas viernes, algun palomino de anadidura los domingos, consumian las tres partes de su hacienda. El resto concluian sayo de velarte, calcas de velludo para las fiestas, con sus pantunflos de lo mesmo, y los dias entre semana se honraua con su vellori de lo mas fino.\n\n  Tenia en su casa una ama que pasaba de los cuarenta, y una sobrina que no llegaba a los veinte, y unn mozo de campo y plaza, que asi ensillaua el rozin como tomaua la podadera. Frisaba la edad nuestro hidalgo con los cincuenta anos. Era de complexion rezia, seco de carnes, enjunto de rostro, gran madrugador y amigo de la caza. Quieren decir que tenia el sobrenombre de Quixadam o Quesada, que en esto hay alguna diferencia en los autores que deste caso escriuen, aunque por conjeturas verosimiles se dexa entender que se llamaua Quexada. Pero esto importa poco a nuestro cuento; basta con que en la narracion del no se salga un punto de la verdad";
 //volatile char dummy2[] = "Sphinx of black quartz, judge my vow.\n...\nThe five boxing wizards jump quickly.\n...\nPack my box with five dozen liquor jugs.";
 
+// JUEGO
+#define nJuegos 3
+#define maxVidas 3
+volatile char juego=0; //Juego en ejecuccion
+volatile char juego_p=0; //Juego anterior, para el generador de numeros aleatorios.
+volatile char vidas=maxVidas;       //Contar las vidas
+volatile int  pts=0;                //Contar los puntos acumulados
+volatile int tempJuego=0;           //Temporizador para los minjuegos, sirve tambien para el generador de numero aleatorio
+volatile int resultJuego=0;        //Mientras siga a 0, el juego esta en ejecucion
+
 ///////////// DATOS PARA LAS LECCIONES -- MOVER A LIBRERIA APARTE??? ---
 struct DatosLeccion{
     char nombre[20];
@@ -104,13 +115,24 @@ struct DatosLeccion{
     void (*demo)(void);
 };
 
+struct DatosMinijuego{
+    char nombre[20];
+    int (*minijuego)(void);
+};
+
 struct DatosLeccion Clases[nClases];
+struct DatosMinijuego Minijuegos[nJuegos];
 
 //Funciones de lecciones
 void dummyDemo(); //Funcion predeterminada para las clases
 void TecladoMusical(); //Demo teclado
 
-int main(void) {
+int dummyJuego(void);
+int demoJuego1(void);
+int demoJuego2(void);
+int demoJuego3(void);
+
+         int main(void) {
 
 
     RELOJ=SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_480), 120000000);
@@ -141,6 +163,7 @@ int main(void) {
         //Limpiamos todos los struct por si acaso
     int i;
     struct DatosLeccion defaultStruct = {"\0","\0","\0","\0","\0",&dummyDemo};
+    //struct DatosMinijuego defaultJuego = {"\0",&dummyJuego};
 
     for(i=0;i<nClases;i++){
         Clases[i]=defaultStruct;
@@ -152,6 +175,15 @@ int main(void) {
     strcpy(Clases[0].textoCaracteristicas,"Por delante de la capa en la que muestra la\nimagen se colocan laminas resistivas para la\ndeteccion de pulsacion.\nCada una de estas capas tienen un terminal\npositivo y otro negativo, por tanto si\nutilizamos dos podemos obtener la posicion en\nel plano (X+,X-,Y+,Y-)\n\nPor ejemplo, para calcular la posicion en el\neje Y se colocan los terminales 'Y+' a 1, 'Y-'\na 0 y 'X-' al aire, y se lee el valor de la\npulsacion por el terminal 'X+'; este valor\nvariara segun la altura a la que pulsemos de\nla pantalla.\n\n\nUsar una pantalla resistiva nos permite\nintegrar comunicacion usuario-maquina de forma\ncomoda y elegante, distinguiendose de otras\npantallas tactiles gracias a que podemos\nutilizarla solo con presionarla y no\nnecesitando unas condiciones de uso que\npermitan que un sensor capacitivo funcione.\n\nEl costo a pagar es que las capas resistivas\nreducen la visibilidad de la imagen, solo son\ncapaces de detectar un punto de presion y es\nnecesario calibrarlas antes de usarlas.");
     strcpy(Clases[0].textoUso,"Estas se usan en muchos entornos distintos;\nen consultas medicas, donde por proteccion y\nlimpieza usan guantes y esterilizan el equipo,\no en pantallas de videoconsolas como la familia\nde las ds.");
     Clases[0].demo = &TecladoMusical;
+
+    //Asignar funciones a "minijuegos"
+    /*
+    for(i=0;i<nClases;i++){
+        Minijuegos[i]=defaultJuego;
+    }*/
+    Minijuegos[0].minijuego = &demoJuego1;
+    Minijuegos[1].minijuego = &demoJuego2;
+    Minijuegos[2].minijuego = &demoJuego3;
 
     //UARTprintf("\nComenzamos pantalla\n");
     // PANTALLA
@@ -257,7 +289,125 @@ int main(void) {
 
         case 2:
             //Seleccion de minijuegos
-            ComTXT(HSIZE/2,VSIZE/2,31,OPT_CENTERX,"JUEGOS");
+            switch(subPantalla){
+            case 0: //LISTOOOOOOS?
+                ComTXT(HSIZE/2,20,31,OPT_CENTERX,"JUEGOS");
+
+                tempJuego++; //Contamos el tiempo para poder aleatorizar el juego
+
+                //Boton de atras
+                ComColor(0,0,0);
+                ComFgcolor(200,0,200);
+                if(Boton(HSIZE/2-150, VSIZE/2-50, 100, 100, 21, "Atras") && botonPresionado==0){
+                    botonPresionado=1;
+                    subPantalla_s=0;
+                    pantalla_s=0;
+                }
+
+                //Boton de seguir
+                ComColor(0,0,0);
+                ComFgcolor(260,250,90);
+                if(Boton(HSIZE/2+50, VSIZE/2-50, 100, 100, 21, "A jugar!") && botonPresionado==0){
+                    botonPresionado=1;
+                    if(tempJuego>2){
+                        juego=(rand() % nJuegos); //Generamos juego aleatorio
+                    } else {
+                        juego=juego_p; //Por si tenemos a flash jugando, que no se estropee el sistema
+                    }
+
+                    subPantalla_s=1;
+                    tempJuego=0;
+                }
+
+                //Si vidas!=maxVidas, set vidas to maxVidas
+                if(vidas!=maxVidas){ vidas=maxVidas; }
+                //Reseteamos puntuacion
+                if(pts!=0){ pts=0; }
+
+                break;
+            case 1: //Mostramos nombre de juego a jugar
+                //Dibujamos vida
+                for(c=1;c<=vidas;c++){
+                    ComColor(200,100,100);
+                    ComCirculo(50,20+30*c,12);
+                }
+
+                //Dibujamos puntuacion
+                ComNum(HSIZE-50, 20, 16, OPT_RIGHTX, pts);
+
+                //Dibujamos nombre de juego
+                sprintf(buffer,"JUEGO %d",juego+1);
+                ComTXT(HSIZE/2, 75, 31, OPT_CENTERX, buffer);
+
+                //Temporizacion
+                tempJuego++;
+                if(tempJuego>=100){ //Segundo y medio de preparacion
+                    tempJuego=0;
+                    subPantalla_s=2;
+                    subPantalla=2;
+                    juego_p=juego; //Actualizamos juego anterior
+                }
+                break;
+
+            case 2: //Juego
+                resultJuego=Minijuegos[juego].minijuego();
+                if(resultJuego>=1){ //Yay
+                    pts++;
+                    subPantalla=3;
+                    subPantalla_s=3;
+                } else if (resultJuego<=-1){ //Nay
+                    vidas--;
+                    subPantalla=3;
+                    subPantalla_s=3;
+                }
+                break;
+
+            case 3: //Resultado del juego, seguir jugando?
+
+                //Dibujamos fondo de borde rojo si mal, verde si guay
+                if(resultJuego>0){
+                    ComColor(0,255,0);
+                } else {
+                    ComColor(255,0,0);
+                }
+                ComRect(5,5,HSIZE-5,VSIZE-5,true);
+                ComColor(0,0,0);
+                ComRect(12,12,HSIZE-12,VSIZE-12,true);
+
+                tempJuego++;
+
+                //Dibujamos vida
+                for(c=1;c<=vidas;c++){
+                    ComColor(200,100,100);
+                    ComCirculo(50,20+30*c,12);
+                }
+
+                //Dibujamos puntuacion
+                ComNum(HSIZE-50, 20, 16, OPT_RIGHTX, pts);tempJuego++; //Contamos el tiempo para poder aleatorizar el juego
+
+                //Boton de atras
+                ComColor(0,0,0);
+                ComFgcolor(200,0,200);
+                if(Boton(HSIZE/2-100, VSIZE/2-50, 100, 100, 21, "Salir") && botonPresionado==0){
+                    botonPresionado=1;
+                    subPantalla_s=0;
+                    pantalla_s=0;
+                }
+
+                //Boton de seguir, solo disponible si se tienen vidas
+                if(vidas>0){
+                    ComColor(0,0,0);
+                    ComFgcolor(160,150,90);
+                    if(Boton(HSIZE/2+100, VSIZE/2-50, 100, 100, 21, "Una mas!") && botonPresionado==0){
+                        botonPresionado=1;
+                        while(juego==juego_p){
+                            juego=(rand() % nJuegos); //Generamos juego aleatorio
+                        }
+                        subPantalla_s=1;
+                        tempJuego=0;
+                    }
+                }
+            }
             break;
 
         case 3:
@@ -645,8 +795,8 @@ int main(void) {
         }
 
         // Boton de retroceso
-            //NO presente en la pantalla 0
-        if(pantalla>0){
+            //NO presente en la pantalla 0 ni en la 2
+        if(pantalla>0 && pantalla!=2){
             ComColor(255,255,255);
             ComFgcolor(175,0,0);
             if(Boton(25, 25, 50, 25, 16,"<-")  && botonPresionado==0){
@@ -751,6 +901,15 @@ void dibujarFondo(int id){
 void dummyDemo(){
     ComColor(100,0,0);
     ComTXT(HSIZE/2,VSIZE/2,31,OPT_CENTERX,"W.I.P.");
+}
+//Funcion predeterminada para los juegos, para evitar errores.
+int dummyJuego(){
+    ComColor(100,0,0);
+    if(Boton(HSIZE/2-100,VSIZE/2-100,200,200,31,"WIP")){
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 
@@ -905,4 +1064,72 @@ void TecladoMusical(void) {
         }
     }
 }
+
+int demoJuego1(void) {
+    int estado = 0;
+    //Fondo
+    ComColor(245, 228, 156); //Caqui
+    ComLineWidth(5);
+    ComRect(10, 10, HSIZE-10, VSIZE-10, true);
+
+    ComColor(0, 0, 0);
+    ComTXT(HSIZE/2,VSIZE/5-10, 29, OPT_CENTERX,"MiniJuego1");
+
+    ComFgcolor(0, 255, 0);
+    if(Boton(HSIZE/4-75, VSIZE/2-50, 150, 100, 26, "Acierto")){
+        estado = 1;
+    }
+
+    ComFgcolor(255, 0, 0);
+    if(Boton(3*HSIZE/4-75, VSIZE/2-50, 150, 100, 26, "Fallo")){
+        estado = -1;
+    }
+    return estado;
+}
+
+
+int demoJuego2(void) {
+    int estado = 0;
+    //Fondo
+    ComColor(110, 110, 156);
+    ComLineWidth(5);
+    ComRect(10, 10, HSIZE-10, VSIZE-10, true);
+
+    ComColor(0, 0, 0);
+    ComTXT(HSIZE/2,VSIZE/5-10, 29, OPT_CENTERX,"MiniJuego2");
+
+    ComFgcolor(0, 255, 0);
+    if(Boton(HSIZE/4-75, VSIZE/2-50, 150, 100, 26, "Acierto")){
+        estado = 1;
+    }
+
+    ComFgcolor(255, 0, 0);
+    if(Boton(3*HSIZE/4-75, VSIZE/2-50, 150, 100, 26, "Fallo")){
+        estado = -1;
+    }
+    return estado;
+}
+
+int demoJuego3(void) {
+    int estado = 0;
+    //Fondo
+    ComColor(0, 255, 255);
+    ComLineWidth(5);
+    ComRect(10, 10, HSIZE-10, VSIZE-10, true);
+
+    ComColor(0, 0, 0);
+    ComTXT(HSIZE/2,VSIZE/5-10, 29, OPT_CENTERX,"MiniJuego3");
+
+    ComFgcolor(0, 255, 0);
+    if(Boton(HSIZE/4-75, VSIZE/2-50, 150, 100, 26, "Acierto")){
+        estado = 1;
+    }
+
+    ComFgcolor(255, 0, 0);
+    if(Boton(3*HSIZE/4-75, VSIZE/2-50, 150, 100, 26, "Fallo")){
+        estado = -1;
+    }
+    return estado;
+}
+
 

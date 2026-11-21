@@ -1,0 +1,8 @@
+"./HAL_I2C.obj"
+"./ft800_TIVA.obj"
+"./main.obj"
+"./tm4c1294ncpdt_startup_ccs.obj"
+"./uartstdio.obj"
+"C:/QNX/TivaWare/driverlib/ccs/Debug/driverlib.lib"
+"../tm4c1294ncpdt.cmd"
+-llibc.a
