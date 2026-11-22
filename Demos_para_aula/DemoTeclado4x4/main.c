@@ -19,8 +19,8 @@
  *************************************/
 
 // V.Pantalla
-const int32_t REG_CAL[6]= {CAL_DEFAULTS}; // Calibración
-#define TAG(x)       ((3UL << 24) | ((x) & 0xFF)) // Detección widget tocado
+const int32_t REG_CAL[6]= {CAL_DEFAULTS}; // Calibraciï¿½n
+#define TAG(x)       ((3UL << 24) | ((x) & 0xFF)) // Detecciï¿½n widget tocado
 int seleccion = 127;
 
 // Etiqueta del slider
@@ -38,7 +38,7 @@ char tecla;
 char codigo[TAM_CODIGO + 1U];
 uint32_t n = 0U;
 
-// Interrupción falsa
+// Interrupciï¿½n falsa
 volatile int Flag_ints=0;
 void SysCtlSleepFake(void)
 {
@@ -51,8 +51,7 @@ void SysCtlSleepFake(void)
 void IntTimer(void);
 
 
-void DibujaTeclaVisual(int x, int y, char *texto)
-{
+void DibujaTeclaVisual(int x, int y, char *texto){
     // Fondo de la tecla
     ComColor(55, 75, 90);
     ComRect(x-15, y-9, x+15, y+9, 1);
@@ -69,13 +68,14 @@ void DibujaTeclaVisual(int x, int y, char *texto)
 
 void Telefono(void)
 {
+    // DeclaraciÃ³n de variables
     static char numeroMostrado[TAM_CODIGO + 1U] = "";
     static char personaLlamada[32] = "Sin llamada";
     static char mensajePersona[64] = "";
 
     // Se consulta el estado del teclado
     ev = TECLADO_Actualizar();
-
+    
     // Se registra la tecla o se deja de reproducir el sonido
     switch(ev){
     case TECLADO_EV_PULSADA:
@@ -201,7 +201,7 @@ void Telefono(void)
 }
 
 int main(void){
-    // Configuración del reloj
+    // Configuraciï¿½n del reloj
     RELOJ=SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_480), 120000000);
 
     // UART0: se conserva la configuracion original.
@@ -217,7 +217,7 @@ int main(void){
     // Teclado: se le indica cada cuantos ms se actualiza.
     TECLADO_Init(MS_TICK);
 
-    // Configuración Timer e interrupción
+    // Configuraciï¿½n Timer e interrupciï¿½n
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);       //Habilita T0
     TimerClockSourceSet(TIMER0_BASE, TIMER_CLOCK_SYSTEM);   //T0 a 120MHz
     TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);    //T0 periodico y conjunto (32b)
@@ -228,13 +228,13 @@ int main(void){
     IntMasterEnable();  //Habilitacion global de interrupciones
     TimerEnable(TIMER0_BASE, TIMER_A);  //Habilitar Timer0, 1, 2A y 2B
 
-    // Configuración modos bajo consumo
+    // Configuraciï¿½n modos bajo consumo
     SysCtlPeripheralSleepEnable(SYSCTL_PERIPH_GPIOF);
     SysCtlPeripheralSleepEnable(SYSCTL_PERIPH_GPION);
     SysCtlPeripheralSleepEnable(SYSCTL_PERIPH_TIMER0);
     SysCtlPeripheralClockGating(true);
 
-    // Pantalla y configuración pantalla inicio
+    // Pantalla y configuraciï¿½n pantalla inicio
     SysCtlDelay(RELOJ/3);
     HAL_Init_SPI(2, RELOJ);  //Boosterpack a usar, Velocidad del MC
     Inicia_pantalla();       //Arranque de la pantalla
@@ -258,7 +258,7 @@ int main(void){
     Espera_pant();
 
 
-    // Calibración pantalla táctil
+    // Calibraciï¿½n pantalla tï¿½ctil
     int i;
     for(i=0;i<6;i++)    Esc_Reg(REG_TOUCH_TRANSFORM_A+4*i, REG_CAL[i]);
 
@@ -291,7 +291,7 @@ int main(void){
     }
 }
 
-// Interrupción
+// Interrupciï¿½n
 void IntTimer(void){
     TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
     SysCtlDelay(20); //Retraso necesario. Mirar Driverlib p.550
