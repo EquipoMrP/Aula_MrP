@@ -1,0 +1,101 @@
+Para la demostración del ultrasonido nos hemos decantando por recrear un theremin.
+El theremin al ser un instrumento donde dependiendo de la posición de la mano se reproduce una nota distinta
+De esta forma dependiendo de la distancia que detecte el ultrasonido se reproducirá una nota distinta.
+
+La función Theremin se encarga de todo lo relacionado con la demostración, en esta encontramos:
+
+Zona de declaración de variables:
+
+// Variables persistentes entre llamadas.
+    static uint8_t cuenta_medida = 0;
+    //    static uint8_t cuenta_print = 0;
+
+    static uint32_t mm = 0;
+    static bool valida = false;
+
+    static uint8_t nota_anterior = 255;
+    static bool sonido_activo = false;
+    uint8_t nota_midi;
+
+    uint32_t segmentos_activos = 0;
+
+    int i;
+    int x;
+    int y;
+    int ancho_total;
+    int x_inicio;
+
+    char texto[40];
+
+Luego se realiza la lectura del ultrasonido cada "TICKS_MEDIDA" ciclos, en esta se comprueba que el HCSR04 puede enviar la señal y lee si recibe alguna señal. Esta lectura se guarda en mm, se satura a valores máximo y minimos si su valor sobrepasa los extremos y se selecciona la nota a tocar.
+Si hubiese algún problema con la lectura del ultrasonido se deja de reproducir la nota. Por último, se dispara la señal del ultrasonido para leerla tras "TICKS_MEDIDA" ciclos.
+
+// Lectura del sensor y cálculo de la nota
+    cuenta_medida++;
+    if (cuenta_medida >= TICKS_MEDIDA){
+        cuenta_medida = 0;
+        valida = HCSR04_Listo();
+        if (valida){
+            mm = HCSR04_LeerMM();
+            if (mm < DIST_MIN_MM){mm = DIST_MIN_MM;}
+            if (mm > DIST_MAX_MM){mm = DIST_MAX_MM;}
+            nota_midi = NOTA_MIN+((DIST_MAX_MM-mm)*(NOTA_MAX-NOTA_MIN))/(DIST_MAX_MM-DIST_MIN_MM);
+
+            if (!sonido_activo || nota_midi != nota_anterior){
+                TocaNota(S_PIPS, nota_midi);
+                nota_anterior = nota_midi;
+                sonido_activo = true;
+            }
+        }else{
+            if (sonido_activo){
+                FinNota();
+
+                sonido_activo = false;
+                nota_anterior = 255;
+            }
+        }
+        HCSR04_Disparar();
+    }
+
+Por último se dibuja todo lo relacionado con la interfaz.
+Se evalua cuantos segmentos activar según la nota reproducida, se dibuja el título y los segmentos rellenando la varra según la cantidad de segmentos activos. Por último, se indica la distancia a la que está el objetivo (incluyendo saturación).
+// Representación de la interfaz
+    if (valida){
+        segmentos_activos =((DIST_MAX_MM - mm) * NUM_SEGMENTOS) /(DIST_MAX_MM - DIST_MIN_MM);
+    }
+
+    ancho_total = NUM_SEGMENTOS * SEG_ANCHO +(NUM_SEGMENTOS - 1) * SEG_ESPACIO;
+    x_inicio = (HSIZE - ancho_total) / 2;
+    y = VSIZE / 2;
+
+    // Titulo.
+    ComColor(30, 45, 55);
+    ComTXT(HSIZE / 2, VSIZE / 4, 31,OPT_CENTERX, "THEREMIN");
+
+
+    // Dibujar los diez segmentos.
+    for (i = 0; i < NUM_SEGMENTOS; i++){
+        x = x_inicio + i * (SEG_ANCHO + SEG_ESPACIO);
+
+        if (valida && (uint32_t)i < segmentos_activos){
+            if (i < 4){ComColor(35, 175, 95);} // Verde
+            else if (i < 7){ComColor(240, 185, 45);} // Amarillo
+            else{ComColor(225, 65, 65);} // Rojo
+        }
+        else{
+            ComColor(195, 195, 190);
+        }
+        ComRect(x, y,x + SEG_ANCHO,y + SEG_ALTO,true);
+    }
+
+    ComColor(30, 45, 55);
+    ComTXT(x_inicio + 30, y + 42, 20,OPT_CENTERX, "LEJOS");
+    ComTXT(x_inicio + ancho_total - 30, y + 42, 20,OPT_CENTERX, "CERCA");
+
+
+    if (valida){
+        sprintf(texto, "Distancia: %u.%u cm",(unsigned int)(mm / 10),(unsigned int)(mm % 10));
+        ComTXT(HSIZE / 2, y + 85, 27,OPT_CENTERX, texto);
+    }else{
+        ComTXT(HSIZE / 2, y + 85, 27,OPT_CENTERX, "ESPERANDO SENSOR");
+    }
