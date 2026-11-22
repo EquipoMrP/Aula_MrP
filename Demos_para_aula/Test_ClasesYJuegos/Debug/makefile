@@ -11,10 +11,19 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./HAL_I2C.obj" \
+"./MrpDemosLib.obj" \
+"./MrpEscenariosLib.obj" \
+"./ds3231.obj" \
 "./ft800_TIVA.obj" \
+"./hcsr04.obj" \
+"./imgs.obj" \
 "./main.obj" \
+"./teclado.obj" \
 "./tm4c1294ncpdt_startup_ccs.obj" \
+"./touch.obj" \
+"./tsop1838.obj" \
 "./uartstdio.obj" \
+"../SENSORLIB2.lib" \
 "C:/QNX/TivaWare/driverlib/ccs/Debug/driverlib.lib" \
 "../tm4c1294ncpdt.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -125,29 +134,29 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-Test_ClasesYJuegos.out 
+ElDiaDeLaUnidad.out 
 
 EXE_OUTPUTS__QUOTED += \
-"Test_ClasesYJuegos.out" 
+"ElDiaDeLaUnidad.out" 
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "Test_ClasesYJuegos.out"
+	@$(MAKE) --no-print-directory -Onone "ElDiaDeLaUnidad.out"
 
 # Tool invocations
-Test_ClasesYJuegos.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
+ElDiaDeLaUnidad.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: Arm Linker'
-	"C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C1294NCPDT -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Test_ClasesYJuegos.map" --heap_size=0 --stack_size=8192 -i"C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Test_ClasesYJuegos_linkInfo.xml" --rom_model -o "Test_ClasesYJuegos.out" $(ORDERED_OBJS)
+	"C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C1294NCPDT -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"ElDiaDeLaUnidad.map" --heap_size=0 --stack_size=8192 -i"C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1281/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="ElDiaDeLaUnidad_linkInfo.xml" --rom_model -o "ElDiaDeLaUnidad.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "HAL_I2C.obj" "ft800_TIVA.obj" "main.obj" "tm4c1294ncpdt_startup_ccs.obj" "uartstdio.obj" 
-	-$(RM) "HAL_I2C.d" "ft800_TIVA.d" "main.d" "tm4c1294ncpdt_startup_ccs.d" "uartstdio.d" 
+	-$(RM) "HAL_I2C.obj" "MrpDemosLib.obj" "MrpEscenariosLib.obj" "ds3231.obj" "ft800_TIVA.obj" "hcsr04.obj" "imgs.obj" "main.obj" "teclado.obj" "tm4c1294ncpdt_startup_ccs.obj" "touch.obj" "tsop1838.obj" "uartstdio.obj" 
+	-$(RM) "HAL_I2C.d" "MrpDemosLib.d" "MrpEscenariosLib.d" "ds3231.d" "ft800_TIVA.d" "hcsr04.d" "imgs.d" "main.d" "teclado.d" "tm4c1294ncpdt_startup_ccs.d" "touch.d" "tsop1838.d" "uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

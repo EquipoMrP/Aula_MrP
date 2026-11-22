@@ -9,13 +9,21 @@ sistema:
 
 %% Segunda pizarra (teoria canónica - ¿Como funciona?)
 
-El fundamento de funcionamiento detras de un teclado matricial es la interconexion entre los pines de los botones de la matriz.
-Segun la fila y columna detectada se puede determinar el boton presionado.
+El fundamento de funcionamiento detras de un\n
+teclado matricial es la interconexion entre\n
+los pines de los botones de la matriz.\n
+Segun la fila y columna detectada se puede\n
+determinar el boton presionado.\n\n
 
-Por ejemplo, para una matriz 4x4 se usarian 8 pines, 4 dedicados a las filas, las cuales son terminal positivo, 
-y 4 dedicados a las columnas, los cuales reciben la señal.
-Cuando se pulsa un dígito, se cierra el circuito y se detecta la fila y columna presionada.
-Su funcionamiento es parecido al del juego de hundir la flota.
+Por ejemplo, para una matriz 4x4 se usarian\n
+8 pines, 4 dedicados a las filas, las cuales\n
+son terminal positivo, y 4 dedicados a las\n
+columnas, los cuales reciben la señal.\n
+Cuando se pulsa un dígito, se cierra el\n
+circuito y se detecta la fila y columna\n
+presionada.\n
+Su funcionamiento es parecido al del juego de\n
+hundir la flota.
 
 * Poner dibujo de la matriz por dentro*
 
@@ -28,7 +36,7 @@ son presionados, permitiendonos trabajar con\n
 combinaciones de pulsaciones.\n\n
 
 Si el teclado es de membrana, es silencioso.\n
-Si es mecanico, es muy longevo y fiable.\n\n\n
+Si es mecanico, es muy longevo y fiable.\n\n
 
 Su principal desventaja es su desgaste; tarde o\n
 temprano los botones dejan de funcionar.\n
@@ -47,7 +55,7 @@ Ademas, son baratos y fiables, por tanto\n
 podemos encontrarlos en muchos dispositivos\n
 comunes, ya sean telefonos de casa, mandos de\n
 television o teclados completos como los de\n
-los ordenadores
+los ordenadores.
 
 
 %% Demo

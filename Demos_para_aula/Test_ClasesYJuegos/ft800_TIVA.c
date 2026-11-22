@@ -898,8 +898,6 @@ void ComTeclas(int x, int y, int w, int h, int fuente, unsigned int ops, char *K
 
 }
 
-
-
 void Ejecuta_Lista(void)
 {
     HAL_SPI_CSLow();                                //
@@ -1111,48 +1109,6 @@ void ComCirculo(int x, int y, int r)
     EscribeRam32(CMD_RESTORE_CONTEXT);
 }
 
-// Función medidor Gauge
-void cmd_gauge(int16_t x, int16_t y, int16_t r, uint16_t options, uint16_t major, uint16_t minor, uint16_t val, uint16_t range)
-{
-    EscribeRam32(CMD_GAUGE);
-    EscribeRam16(x);
-    EscribeRam16(y);
-    EscribeRam16(r);
-    EscribeRam16(options);
-    EscribeRam16(major);
-    EscribeRam16(minor);
-    EscribeRam16(val);
-    EscribeRam16(range);
-    PadFIFO();
-}
-
-// Función de slicer
-void cmd_slider(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t options, uint16_t val, uint16_t range)
-{
-    EscribeRam32(CMD_SLIDER);
-    EscribeRam16(x);
-    EscribeRam16(y);
-    EscribeRam16(w);
-    EscribeRam16(h);
-    EscribeRam16(options);
-    EscribeRam16(val);
-    EscribeRam16(range);
-    PadFIFO();
-}
-
-// Función lectura zona
-void cmd_track(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t tag)
-{
-    EscribeRam32(CMD_TRACK);
-    EscribeRam16(x);
-    EscribeRam16(y);
-    EscribeRam16(w);
-    EscribeRam16(h);
-    EscribeRam16(tag);
-    EscribeRam16(0); // Relleno de alineación
-    PadFIFO();
-}
-
 
 void Espera_pant(void)
 {
@@ -1293,3 +1249,98 @@ void Fadein()
     HAL_SPI_CSHigh();
 
 }
+
+// Funciones nuevas para el proyecto
+
+
+// Funcion gradiente
+void ComGradColor(long color) {
+    EscribeRam32(CMD_GRADCOLOR);
+    EscribeRam32(color);
+}
+
+// Función medidor Gauge
+void cmd_gauge(int16_t x, int16_t y, int16_t r, uint16_t options, uint16_t major, uint16_t minor, uint16_t val, uint16_t range)
+{
+    EscribeRam32(CMD_GAUGE);
+    EscribeRam16(x);
+    EscribeRam16(y);
+    EscribeRam16(r);
+    EscribeRam16(options);
+    EscribeRam16(major);
+    EscribeRam16(minor);
+    EscribeRam16(val);
+    EscribeRam16(range);
+    PadFIFO();
+}
+
+// Funcion barra de progreso
+void cmd_progress(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t options, uint16_t val, uint16_t range)
+{
+    EscribeRam32(CMD_PROGRESS);
+    EscribeRam16(x);
+    EscribeRam16(y);
+    EscribeRam16(w);
+    EscribeRam16(h);
+    EscribeRam16(options);
+    EscribeRam16(val);
+    EscribeRam16(range);
+    PadFIFO();
+}
+
+// Función de slicer
+void cmd_slider(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t options, uint16_t val, uint16_t range)
+{
+    EscribeRam32(CMD_SLIDER);
+    EscribeRam16(x);
+    EscribeRam16(y);
+    EscribeRam16(w);
+    EscribeRam16(h);
+    EscribeRam16(options);
+    EscribeRam16(val);
+    EscribeRam16(range);
+    PadFIFO();
+}
+
+// Función lectura zona
+void cmd_track(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t tag)
+{
+    EscribeRam32(CMD_TRACK);
+    EscribeRam16(x);
+    EscribeRam16(y);
+    EscribeRam16(w);
+    EscribeRam16(h);
+    EscribeRam16(tag);
+    EscribeRam16(0); // Relleno de alineación
+    PadFIFO();
+}
+
+// Función dibuja dial
+void cmd_dial(int16_t x, int16_t y, int16_t r, uint16_t options, uint16_t val)
+{
+    EscribeRam32(CMD_DIAL);
+    EscribeRam16(x);
+    EscribeRam16(y);
+    EscribeRam16(r);
+    EscribeRam16(options);
+    EscribeRam16(val);
+    PadFIFO();
+}
+
+// Funcion reloj
+void cmd_clock(int16_t x, int16_t y, int16_t r, uint16_t options, uint16_t h, uint16_t m, uint16_t s, uint16_t ms)
+{
+    EscribeRam32(CMD_CLOCK);
+    EscribeRam16(x);
+    EscribeRam16(y);
+    EscribeRam16(r);
+    EscribeRam16(options);
+    EscribeRam16(h);
+    EscribeRam16(m);
+    EscribeRam16(s);
+    EscribeRam16(ms);
+    PadFIFO();
+}
+
+
+

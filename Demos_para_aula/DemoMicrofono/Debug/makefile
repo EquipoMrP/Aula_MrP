@@ -11,7 +11,7 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./HAL_I2C.obj" \
-"./demoMicrofono.obj" \
+"./demoJoystick.obj" \
 "./ft800_TIVA.obj" \
 "./tm4c1294ncpdt_startup_ccs.obj" \
 "./uartstdio.obj" \
@@ -146,8 +146,8 @@ DemoMicrofono.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "HAL_I2C.obj" "demoMicrofono.obj" "ft800_TIVA.obj" "tm4c1294ncpdt_startup_ccs.obj" "uartstdio.obj" 
-	-$(RM) "HAL_I2C.d" "demoMicrofono.d" "ft800_TIVA.d" "tm4c1294ncpdt_startup_ccs.d" "uartstdio.d" 
+	-$(RM) "HAL_I2C.obj" "demoJoystick.obj" "ft800_TIVA.obj" "tm4c1294ncpdt_startup_ccs.obj" "uartstdio.obj" 
+	-$(RM) "HAL_I2C.d" "demoJoystick.d" "ft800_TIVA.d" "tm4c1294ncpdt_startup_ccs.d" "uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

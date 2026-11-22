@@ -1,5 +1,6 @@
 %% Primera pizarra (introducción al sensor)
-Los sensores ultrasonido nos permiten medir distancias de forma sencilla y efectiva.
+Los sensores ultrasonido nos permiten medir\n
+distancias de forma sencilla y efectiva.
 
 *TIPO FOTO DEL SENSOR*
 
@@ -7,25 +8,48 @@ Los sensores ultrasonido nos permiten medir distancias de forma sencilla y efect
 
 %% Segunda pizarra (teoria canónica - ¿Como funciona?)
 
-Este sensor dispone de un emisor y un receptor de ondas de ultrasonido, son facilmente reconocibles por parecer "ojos" del sensor. En cierta manera lo son.
+Este sensor dispone de un emisor y un receptor\n
+de ondas de ultrasonido, son facilmente\n
+reconocibles por parecer "ojos" del sensor.\n
+En cierta manera lo son.\n\n
 
-El emisor emite una onda ultrasonica y se inicia un contador.
-La onda viaja hasta llegar a un objeto, y rebota de vuelta al sensor, donde es captada por el receptor.
-Conociendo el tiempo de transito y la forma de la onda recibida podemos calcular la distancia hasta el objeto.
+El emisor emite una onda ultrasonica y se\n
+inicia un contador.\n
+La onda viaja hasta llegar a un objeto, y\n
+rebota de vuelta al sensor, donde es captada\n
+por el receptor.\n
+Conociendo el tiempo de transito y la forma de\n
+la onda recibida podemos calcular la distancia\n
+hasta el objeto.
 
 * Poner dibujp de ej onda o poner la formulita de la distancia *
 
 
 %% Tercera pizarra (ventajas + Uso .- Revisar extensión contemplar 5º pizarra)
 
-Tienen un funcionamiento sencillo y un coste de produccion barato, por tanto son comunmente utilizados en proyectos sencillos o para la toma de medidas de distancia en entornos controlados o donde importe menos la precision.
+Tienen un funcionamiento sencillo y un coste de\n
+produccion barato, por tanto son comunmente\n
+utilizados en proyectos sencillos o para la\n
+toma de medidas de distancia en entornos\n
+controlados o donde importe menos la precision.\n\n
 
-Una de las principales desventajas de esta clase de medida de distancia es que si la superficie del objeto esta angulada en una direccion que no apunte al objeto, la precision de la medida disminuye.
-Para solventar este problema se pueden bucar sensores de mayor gama, o desplazarse a otra clase de sensores de distancia, como los LIDAR; sensores de funcionamiento similar pero que utilizan radiacion electromagnetica.
+Una de las principales desventajas de esta\n
+clase de medida de distancia es que si la\n
+superficie del objeto esta angulada en una\n
+direccion que no apunte al objeto, la precision\n
+de la medida disminuye.\n
+Para solventar este problema se pueden bucar\n
+sensores de mayor gama, o desplazarse a otra\n
+clase de sensores de distancia, como los LIDAR;\n
+sensores de funcionamiento similar pero que\n
+utilizan radiacion electromagnetica.
 
 %% Cuarta parte (Uso)
-Esta clase de sensores se encuentra en multitud de sistemas, uno de los mas comunes siendo la camara trasera de los automoviles.
-Tambien es el tipo de sensor de distancia preferido por muchos proyectos caseros.
+Esta clase de sensores se encuentra en\n
+multitud de sistemas, uno de los mas comunes\n
+siendo la camara trasera de los automoviles.\n
+Tambien es el tipo de sensor de distancia\n
+preferido por muchos proyectos caseros.
 
 * Foto de camara marcha atrás del coche y tipi coche proyectos *
 

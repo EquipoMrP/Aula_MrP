@@ -15,6 +15,16 @@
 #include "utils/uartstdio.h"
 
 #include "FT800_TIVA.h"
+#include "HAL_I2C.h"
+#include "sensorlib2.h"
+#include "touch.h"
+#include "tsop1838.h"
+#include "teclado.h"
+#include "hcsr04.h"
+#include "ds3231.h"
+
+#include <MrpDemosLib.h>
+#include <MrpEscenariosLib.h>
 
 // =======================================================================
 // Function Declarations
@@ -69,6 +79,7 @@ volatile int page=0;
 volatile int subPantalla=0;
 
 //Control de los botones
+#define clasesPorPagina 2
 volatile int page_s=0;
 volatile int pantalla_s=0;
 volatile int subPantalla_s=0;
@@ -76,16 +87,17 @@ volatile int botonPresionado=0;
 
 //Dibujar por pantalla;
 char buffer[100];
-void dibujarFondo(int id);
 
 //Dibujar lecciones
 #define tamLineaClase 49
 #define numLineaClase 7 //Se escribe una linea mas que la especificada porque se indexa en 0
 #define numLineaIntro 2
 #define numLineaFin 4
-#define txtDesarrollo 2000
-#define txtCorto 500
-#define maxPag 5
+#define txtSizeIntro 200
+#define txtSizeExpl 3700
+#define txtSizeCaract 1700
+#define txtSizeUso 600
+#define maxPag 15
 volatile int contLetra=0;
 volatile int contLinea=0;
 volatile int contString=0;
@@ -107,16 +119,16 @@ volatile int resultJuego=0;        //Mientras siga a 0, el juego esta en ejecuci
 
 ///////////// DATOS PARA LAS LECCIONES -- MOVER A LIBRERIA APARTE??? ---
 struct DatosLeccion{
-    char nombre[20];
-    char textoIntroduccion[txtCorto];
-    char textoExplicacion[txtDesarrollo];
-    char textoCaracteristicas[txtDesarrollo];
-    char textoUso[txtCorto];
+    char nombre[25];
+    char textoIntroduccion[txtSizeIntro];
+    char textoExplicacion[txtSizeExpl];
+    char textoCaracteristicas[txtSizeCaract];
+    char textoUso[txtSizeUso];
     void (*demo)(void);
 };
 
 struct DatosMinijuego{
-    char nombre[20];
+    char nombre[25];
     int (*minijuego)(void);
 };
 
@@ -132,10 +144,16 @@ int demoJuego1(void);
 int demoJuego2(void);
 int demoJuego3(void);
 
-         int main(void) {
+int main(void) {
 
 
     RELOJ=SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_480), 120000000);
+
+    // LEDs integrados
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_0 |GPIO_PIN_4); //F0 y F4: salidas
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0 |GPIO_PIN_1); //N0 y N1: salidas
 
     //Habilitar perifericos no boosterpack y configurar temporizador
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
@@ -150,7 +168,7 @@ int demoJuego3(void);
     IntMasterEnable();
     TimerEnable(TIMER0_BASE, TIMER_A);
 
-    //Perifericos sensores digitales
+    //Perifericos UART
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
     GPIOPinConfigure(GPIO_PA0_U0RX);
@@ -158,6 +176,32 @@ int demoJuego3(void);
     GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
     UARTStdioConfig(0, 115200, RELOJ);
+    //Configuracion de los sensores
+    Conf_Boosterpack(1, RELOJ);
+
+    TOUCH_Init(MS_TICK);
+    IR_Init(RELOJ);
+    SetupSensorBoosterpack();
+    HCSR04_Init((uint32_t)RELOJ);
+    HCSR04_Disparar();
+    TECLADO_Init(MS_TICK);
+    SysCtlPeripheralEnable(SOUND_PERIPH);
+    GPIOPinTypeGPIOInput(SOUND_BASE, SOUND_PIN);   //E3: entrada
+    GPIOPadConfigSet(SOUND_BASE,SOUND_PIN,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU); //Pullup en E3
+    // RTC: I2C2 hardware y pines PN5/PN4 (100 kHz)
+    DS3231_Init((uint32_t)RELOJ);
+    //////// Joystick ---------------------------------
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOK);    // PK2 (X) y PK3 (Y)
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOP);    // PP4 (boton)
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_ADC0) ||
+          !SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOK) ||
+          !SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOP));
+        // Pines: PK2/PK3 analogicos, PP4 entrada digital con pull-up
+    GPIOPinTypeADC(GPIO_PORTK_BASE, GPIO_PIN_2 | GPIO_PIN_3);
+    GPIOPinTypeGPIOInput(BASE_BUTJOYSTICK, PIN_BUTJOYSTICK);
+    GPIOPadConfigSet(BASE_BUTJOYSTICK, PIN_BUTJOYSTICK, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+    //////////// -----------------------------------------------------------------------------------------
 
     //Asignar valores a los struct (no se puede hacer fuera)
         //Limpiamos todos los struct por si acaso
@@ -169,12 +213,87 @@ int demoJuego3(void);
         Clases[i]=defaultStruct;
     }
 
-    strcpy(Clases[0].nombre,"Pantalla Resistiva");
-    strcpy(Clases[0].textoIntroduccion,"Las pantallas resistivas ofrecen al usuario una forma comoda y rapida de interaccion con el sistema.");
-    strcpy(Clases[0].textoExplicacion,"Para evitar un sobrecargar del microcontrolador\nprincipal, la pantalla tiene un coprocesador\nintegrado, encargado de dibujar la pantalla con\nfunciones propias para la interfaz.\n\nLa resolucion de las pantallas consiste en la\ncantidad de pixeles a lo ancho y alto que\nposeen y no de sus dimensiones fisicas.\nA cada pixel se le debe proporcionar un valor\nde rojo, verde y azul, permitiendo dibujar en una\ngama de 262.144 colores distintos.\n(Este rango de colores depende del rango de\nvalores que acepten el rojo, verde y azul,\nusualmente de 0 a 255)");
-    strcpy(Clases[0].textoCaracteristicas,"Por delante de la capa en la que muestra la\nimagen se colocan laminas resistivas para la\ndeteccion de pulsacion.\nCada una de estas capas tienen un terminal\npositivo y otro negativo, por tanto si\nutilizamos dos podemos obtener la posicion en\nel plano (X+,X-,Y+,Y-)\n\nPor ejemplo, para calcular la posicion en el\neje Y se colocan los terminales 'Y+' a 1, 'Y-'\na 0 y 'X-' al aire, y se lee el valor de la\npulsacion por el terminal 'X+'; este valor\nvariara segun la altura a la que pulsemos de\nla pantalla.\n\n\nUsar una pantalla resistiva nos permite\nintegrar comunicacion usuario-maquina de forma\ncomoda y elegante, distinguiendose de otras\npantallas tactiles gracias a que podemos\nutilizarla solo con presionarla y no\nnecesitando unas condiciones de uso que\npermitan que un sensor capacitivo funcione.\n\nEl costo a pagar es que las capas resistivas\nreducen la visibilidad de la imagen, solo son\ncapaces de detectar un punto de presion y es\nnecesario calibrarlas antes de usarlas.");
-    strcpy(Clases[0].textoUso,"Estas se usan en muchos entornos distintos;\nen consultas medicas, donde por proteccion y\nlimpieza usan guantes y esterilizan el equipo,\no en pantallas de videoconsolas como la familia\nde las ds.");
-    Clases[0].demo = &TecladoMusical;
+        //TM4C 1294
+    strcpy(Clases[0].nombre,nombreMC);
+    strcpy(Clases[0].textoIntroduccion,introduccionMC);
+    strcpy(Clases[0].textoExplicacion,caracteristicasMC);
+    strcpy(Clases[0].textoCaracteristicas,ventajasMC);
+    strcpy(Clases[0].textoUso,usosScreen);
+    Clases[0].demo = &Dibuja_TM4C;
+
+        //Pantalla resistiva
+    strcpy(Clases[1].nombre,nombreScreen);
+    strcpy(Clases[1].textoIntroduccion,introduccionScreen);
+    strcpy(Clases[1].textoExplicacion,caracteristicasScreen);
+    strcpy(Clases[1].textoCaracteristicas,ventajasScreen);
+    strcpy(Clases[1].textoUso,usosScreen);
+    Clases[1].demo = &TecladoMusical;
+
+        //Boosterpack de sensores
+    strcpy(Clases[2].nombre,nombreSensors);
+    strcpy(Clases[2].textoIntroduccion,introduccionSensors);
+    strcpy(Clases[2].textoExplicacion,caracteristicasSensors);
+    strcpy(Clases[2].textoCaracteristicas,ventajasSensors);
+    strcpy(Clases[2].textoUso,usosSensors);
+    Clases[2].demo = &SensoresBoosterpack;
+
+        //Joystick
+    strcpy(Clases[3].nombre,nombreJoystick);
+    strcpy(Clases[3].textoIntroduccion,introduccionJoystick);
+    strcpy(Clases[3].textoExplicacion,caracteristicasJoystick);
+    strcpy(Clases[3].textoCaracteristicas,ventajasJoystick);
+    strcpy(Clases[3].textoUso,usosTeclado);
+    Clases[3].demo = &JoystickMrP;
+
+        //Teclado matricial
+    strcpy(Clases[4].nombre,nombreTeclado);
+    strcpy(Clases[4].textoIntroduccion,introduccionTeclado);
+    strcpy(Clases[4].textoExplicacion,caracteristicasTeclado);
+    strcpy(Clases[4].textoCaracteristicas,ventajasTeclado);
+    strcpy(Clases[4].textoUso,usosTeclado);
+    Clases[4].demo = &Telefono;
+
+        //Sensor capacitivo
+    strcpy(Clases[5].nombre,nombreTouch);
+    strcpy(Clases[5].textoIntroduccion,introduccionTouch);
+    strcpy(Clases[5].textoExplicacion,caracteristicasTouch);
+    strcpy(Clases[5].textoCaracteristicas,ventajasTouch);
+    strcpy(Clases[5].textoUso,usosTouch);
+    Clases[5].demo = &NotasAleatorias;
+
+        //Sensor de sonido
+    strcpy(Clases[6].nombre,nombreSound);
+    strcpy(Clases[6].textoIntroduccion,introduccionSound);
+    strcpy(Clases[6].textoExplicacion,caracteristicasSound);
+    strcpy(Clases[6].textoCaracteristicas,ventajasSound);
+    strcpy(Clases[6].textoUso,usosSound);
+    Clases[6].demo = &despiertaMrP;
+
+        //RTC
+    strcpy(Clases[7].nombre,nombreRTC);
+    strcpy(Clases[7].textoIntroduccion,introduccionRTC);
+    strcpy(Clases[7].textoExplicacion,caracteristicasRTC);
+    strcpy(Clases[7].textoCaracteristicas,ventajasRTC);
+    strcpy(Clases[7].textoUso,usosRTC);
+    Clases[7].demo = &ProgramaReloj;
+
+        //Sensor de infrarrojos
+    strcpy(Clases[8].nombre,nombreIR);
+    strcpy(Clases[8].textoIntroduccion,introduccionIR);
+    strcpy(Clases[8].textoExplicacion,caracteristicasIR);
+    strcpy(Clases[8].textoCaracteristicas,ventajasIR);
+    strcpy(Clases[8].textoUso,usosIR);
+    Clases[8].demo = &sensorIRyMrP;
+
+        //Sensor de ultrasonido
+    strcpy(Clases[9].nombre,nombreUltrasonido);
+    strcpy(Clases[9].textoIntroduccion,introduccionUltrasonido);
+    strcpy(Clases[9].textoExplicacion,caracteristicasUltrasonido);
+    strcpy(Clases[9].textoCaracteristicas,ventajasUltrasonido);
+    strcpy(Clases[9].textoUso,usosUltrasonido);
+    Clases[9].demo = &Theremin;
+
+
 
     //Asignar funciones a "minijuegos"
     /*
@@ -189,6 +308,7 @@ int demoJuego3(void);
     // PANTALLA
     HAL_Init_SPI(2, RELOJ);  //Boosterpack a usar, Velocidad del MC
     Inicia_pantalla();       //Arranque de la pantalla
+    VolNota(127);
 
 
     //UARTprintf("\nComenzamos pantalla2\n");
@@ -243,18 +363,19 @@ int demoJuego3(void);
 
         case 1:
             //Seleccion de clases
+
             ComTXT(HSIZE/2,20,31,OPT_CENTERX,"CLASES");
 
-            if( (nClases-(page*5)) >=5){
-                clasesDisponibles=5;
-            } else if ( (nClases-(page*5)) >0){ //Proteccion en caso de error
-                clasesDisponibles= (nClases-(page*5)) ;
+            if( (nClases-(page*clasesPorPagina)) >=clasesPorPagina){
+                clasesDisponibles=clasesPorPagina;
+            } else if ( (nClases-(page*clasesPorPagina)) >0){ //Proteccion en caso de error
+                clasesDisponibles= (nClases-(page*clasesPorPagina)) ;
             }
 
             ComFgcolor(255,0,0);
-            for(c=page*5;c<clasesDisponibles+page*5;c++){
-                sprintf(buffer,"Clase %d",c);
-                if(Boton(15+70*(c-page*5), VSIZE/2, 50, 50,21, buffer) && botonPresionado==0){
+            for(c=page*clasesPorPagina;c<clasesDisponibles+page*clasesPorPagina;c++){
+                sprintf(buffer,Clases[c].nombre,c);
+                if(Boton(15+140*(c-page*clasesPorPagina), VSIZE/2, 125, 50,21, buffer) && botonPresionado==0){
                     pantalla_s=3; //Vamos a clase
                     claseSeleccionada=c;
                     page_s=0;
@@ -265,7 +386,7 @@ int demoJuego3(void);
 
             //Posible cambio de pagina si se necesita
             //Siguiente pagina si aun quedan juegos
-            if( (nClases-(page*5)) >5){
+            if( (nClases-(page*clasesPorPagina)) >clasesPorPagina){
                 //Si hay mas clases que las que se pueden mostrar, boton de otra pestana
                 ComFgcolor(0,255,0);
                 if(Boton(HSIZE-75, VSIZE-50, 50, 25, 16, "Siguiente") && botonPresionado==0){
@@ -430,7 +551,7 @@ int demoJuego3(void);
 
                     buffer[contLetra] = Clases[claseSeleccionada].textoIntroduccion[contString];
                     //UARTprintf("contLetra=%d - ",contLetra);
-                    if(buffer[contLetra]=='\0' || contString > txtDesarrollo){
+                    if(buffer[contLetra]=='\0' || contString > txtSizeIntro){
                         //Si caracter terminador, dejar de escribir
                         ComTXT(28,60+contLinea*20,27,0,buffer);
                         escribiendo=0;
@@ -497,7 +618,7 @@ int demoJuego3(void);
 
                     buffer[contLetra] = Clases[claseSeleccionada].textoExplicacion[contString];
                     //UARTprintf("contLetra=%d - ",contLetra);
-                    if(buffer[contLetra]=='\0' || contString > txtDesarrollo){
+                    if(buffer[contLetra]=='\0' || contString > txtSizeExpl){
                         //Si caracter terminador, dejar de escribir
                         ComTXT(28,60+contLinea*20,27,0,buffer);
                         escribiendo=0;
@@ -537,7 +658,7 @@ int demoJuego3(void);
 
                 // Botones de cambio de pantalla
                     //Continuar
-                if(Clases[claseSeleccionada].textoExplicacion[contString]!='\0' && contString<txtDesarrollo && page<(maxPag-1) ){
+                if(Clases[claseSeleccionada].textoExplicacion[contString]!='\0' && contString<txtSizeExpl && page<(maxPag-1) ){
                         //En caso de haber mas texto disponible, continuar a mas texto disponible
                     ComFgcolor(100,255,255);
                     ComColor(0,0,0);
@@ -601,7 +722,7 @@ int demoJuego3(void);
 
                     buffer[contLetra] = Clases[claseSeleccionada].textoCaracteristicas[contString];
                     //UARTprintf("contLetra=%d - ",contLetra);
-                    if(buffer[contLetra]=='\0' || contString > txtDesarrollo){
+                    if(buffer[contLetra]=='\0' || contString > txtSizeCaract){
                         //Si caracter terminador, dejar de escribir
                         ComTXT(28,60+contLinea*20,27,0,buffer);
                         escribiendo=0;
@@ -641,7 +762,7 @@ int demoJuego3(void);
 
                 // Botones de cambio de pantalla
                     //Continuar
-                if(Clases[claseSeleccionada].textoCaracteristicas[contString]!='\0' && contString<txtDesarrollo && page<(maxPag-1) ){
+                if(Clases[claseSeleccionada].textoCaracteristicas[contString]!='\0' && contString<txtSizeCaract && page<(maxPag-1) ){
                         //En caso de haber mas texto disponible, continuar a mas texto disponible
                     ComFgcolor(100,255,255);
                     ComColor(0,0,0);
@@ -698,13 +819,13 @@ int demoJuego3(void);
                 //Texto
                 escribiendo=1;
                 contLetra=0;
-                contString=0;
+                contString=contString_page[page];
                 contLinea=0;
                 sprintf(buffer,"\0");
                 while (escribiendo){
 
                     buffer[contLetra] = Clases[claseSeleccionada].textoUso[contString];
-                    if(buffer[contLetra]=='\0' || contString > txtDesarrollo){
+                    if(buffer[contLetra]=='\0' || contString > txtSizeUso){
                         ComTXT(28,60+contLinea*20,27,0,buffer);
                         escribiendo=0;
 
@@ -724,7 +845,7 @@ int demoJuego3(void);
                         contLinea++;
                         contString++;
                         sprintf(buffer,"\0");
-                        if(contLinea>numLineaFin){
+                        if(contLinea>numLineaClase){
                             escribiendo=0;
                         }
 
@@ -740,28 +861,62 @@ int demoJuego3(void);
                 // Extra
 
                 // Botones de cambio de pantalla
-                    //Continuar
-                ComFgcolor(0,255,0);
-                ComColor(0,0,0);
-                if(Boton(HSIZE-75, VSIZE-50, 50, 25, 16, "Siguiente") && botonPresionado==0){
-                    subPantalla_s=4;
-                    botonPresionado=1;
+                //Continuar
+                if(Clases[claseSeleccionada].textoUso[contString]!='\0' && contString<txtSizeUso && page<(maxPag-1) ){
+                    //En caso de haber mas texto disponible, continuar a mas texto disponible
+                    ComFgcolor(100,255,255);
+                    ComColor(0,0,0);
+                    if(Boton(HSIZE-75, VSIZE-50, 50, 25, 16, "->") && botonPresionado==0){
+                        page_s=page+1;
+                        if(page_s>=maxPag){ //Saturacion
+                            page_s=maxPag-1;
+                        }
+                        contString_page[page_s]=contString;
+                        botonPresionado=1;
+                    }
+
+                } else {
+                    //En caso contrario, continuar a la siguiente diapositiva
+                    ComFgcolor(0,255,0);
+                    ComColor(0,0,0);
+                    if(Boton(HSIZE-75, VSIZE-50, 50, 25, 16, "Siguiente") && botonPresionado==0){
+                        subPantalla_s=4;
+                        page_s=0;
+                        botonPresionado=1;
+                    }
                 }
 
                     //Retroceso
-                ComFgcolor(0,255,0);
-                ComColor(0,0,0);
-                if(Boton(25, VSIZE-50, 50, 25, 16, "Anterior") && botonPresionado==0){
-                    subPantalla_s=2;
-                    botonPresionado=1;
+                if(page>0){
+                    //En caso de no estar en la primera pagina, dar la opcion a retroceder al texto anterior
+                    ComFgcolor(100,255,255);
+                    ComColor(0,0,0);
+                    if(Boton(25, VSIZE-50, 50, 25, 16, "<-") && botonPresionado==0){
+                        page_s=page-1;
+                        if(page_s<0){ //Saturacion
+                            page_s=0;
+                        }
+                        botonPresionado=1;
+                    }
+
+                } else {
+                    //Si estamos en la primera pagina, retroceder de diapositiva
+                    ComFgcolor(0,255,0);
+                    ComColor(0,0,0);
+                    if(Boton(25, VSIZE-50, 50, 25, 16, "Anterior") && botonPresionado==0){
+                        subPantalla_s=2;
+                        page_s=0;
+                        botonPresionado=1;
+                    }
                 }
+
                 break;
 
             case 4: //Ejemplo de uso ----------------------------------------
                 //////// REALMENTE TODO ESTE CASO SE VA A IR AL CARAJO
                 dibujarFondo(1);
                 ComColor(0,0,0);
-                ComTXT(HSIZE/2,30,27,OPT_CENTERX,"EJEMPLO");
+                //ComTXT(HSIZE/2,30,27,OPT_CENTERX,"EJEMPLO");
 
                 // Funcion
                 Clases[claseSeleccionada].demo();
@@ -829,74 +984,6 @@ int demoJuego3(void);
 
 }
 
-void dibujarFondo(int id){
-
-    switch(id){
-    case 0: //LECCION TEORIA
-        //Fondo
-        ComColor(245, 228, 156); //Caqui
-        ComLineWidth(5);
-        ComRect(10, 10, HSIZE-10, VSIZE-10, true);
-
-        //Borde pizarra
-        ComColor(156, 90, 60); //Marron
-        ComRect(17, 17, HSIZE-17, VSIZE-17, true);
-
-        //Relleno pizarra
-        ComColor(13, 77, 53); //Verde oscuro
-        ComRect(23, 23, HSIZE-23, VSIZE-23, true);
-
-        ComLineWidth(1);
-        //Borrador
-        ComColor(70, 70, 70); //Gris oscuro
-        ComRect(HSIZE-43, VSIZE-23, HSIZE-63, VSIZE-26, true);
-        ComColor(79, 41, 25); //Marron oscuro
-        ComRect(HSIZE-43, VSIZE-28, HSIZE-63, VSIZE-33, true);
-
-        //Tizas
-        ComColor(255,255,255);
-        ComRect(HSIZE-79, VSIZE-24, HSIZE-89, VSIZE-25, true);
-        ComRect(HSIZE-104, VSIZE-24, HSIZE-108, VSIZE-25, true);
-
-        //Retoques
-        ComColor(13, 77, 53); //Verde oscuro
-        ComRect(HSIZE-76, VSIZE-28, HSIZE-111, VSIZE-30, true);
-
-        break;
-
-    case 1://LECCION EJEMPLO
-        //Fondo
-        ComColor(245, 228, 156); //Caqui
-        ComLineWidth(5);
-        ComRect(10, 10, HSIZE-10, VSIZE-10, true);
-
-        //Borde pizarra
-        ComColor(0, 0, 0); //Negro
-        ComRect(17, 17, HSIZE-17, 33, true);
-        ComRect(23, 23, HSIZE-23, VSIZE-23, true);
-
-
-        //Borde abajo pizarra
-        ComRect(20, VSIZE-26, HSIZE-20, VSIZE-18, true);
-
-        //Relleno pizarra
-        ComColor(255, 255, 255); //Blanco
-        ComRect(25, 23, HSIZE-25, VSIZE-23, true);
-
-
-
-        break;
-
-    default:
-        ComColor(245, 228, 156); //Caqui
-        ComLineWidth(5);
-        ComRect(10, 10, HSIZE-10, VSIZE-10, true);
-        break;
-
-
-    }
-}
-
 //Funcion predeterminada para las clases, para evitar errores.
 void dummyDemo(){
     ComColor(100,0,0);
@@ -912,158 +999,6 @@ int dummyJuego(){
     }
 }
 
-
-#define TAG(x)       ((3UL << 24) | ((x) & 0xFF)) // Detección widget tocado
-// Etiqueta del slider
-#define TAG_SLIDER 34
-
-// V. Programa
-volatile char Cambia=0;
-char cadena[10];
-volatile int seleccion = 127;
-int contador_paso = 0;
-int estado_color = 0;
-
-//Funcion teclado musical ---- MOVER A LIBRERIA POSTERIORMENTE
-void TecladoMusical(void) {
-
-    // Variable estática para recordar qué tecla está sonando actualmente
-    static unsigned char tecla_anterior = 0;
-    unsigned char tecla_pulsada;
-
-    static int octava_semitonos = 0; // -12, 0 y +12
-    static bool gauge_pulsado_anterior = false;
-
-    // --- 1. GESTIÓN DEL GAUGE INTERACTIVO DE OCTAVA (Margen superior >= 50px) ---
-#define TAG_GAUGE 60
-
-    // Rastrear el área táctil del Gauge (Centro en X=80, Y=100, Radio=45 -> Top en Y=55)
-    cmd_track(35, 55, 90, 90, TAG_GAUGE);
-
-    uint32_t track_val = Lee_Reg(REG_TRACKER);
-    uint16_t tag_pulsado = (uint16_t)(track_val & 0xFFFFU);
-    uint16_t raw_val = (uint16_t)(track_val >> 16);
-
-    // Si tocamos el gauge, cambiamos de octava de forma cíclica
-    if (tag_pulsado == TAG_GAUGE) {
-        if (!gauge_pulsado_anterior) {
-            gauge_pulsado_anterior = true;
-
-            if (octava_semitonos == -12) {
-                octava_semitonos = 0;      // Normal
-            } else if (octava_semitonos == 0) {
-                octava_semitonos = 12;     // +1 Octava
-            } else {
-                octava_semitonos = -12;    // -1 Octava
-            }
-        }
-    } else {
-        gauge_pulsado_anterior = false;
-    }
-
-    // Dibujar el Gauge indicador de octava (Centro en X=80, Y=100, Radio=45)
-    int valor_gauge = octava_semitonos + 12;
-
-    ComColor(255, 255, 255);
-    EscribeRam32(TAG(TAG_GAUGE));
-    cmd_gauge(80, 100, 45, 0, 2, 2, valor_gauge, 24);
-    EscribeRam32(TAG(255));
-
-    // Cajón para el texto de la octava (situado debajo del gauge, Y: 148 a 170)
-    ComColor(0, 0, 0);
-    ComRect(35, 148, 125, 170, true);
-    ComColor(255, 255, 255);
-    ComRect(37, 150, 123, 168, true);
-
-    ComColor(0, 0, 0);
-    sprintf(cadena, "Oct: %+d", octava_semitonos / 12);
-    ComTXT(42, 152, 26, 0, cadena);
-
-
-    // --- 2. AJUSTE DE VOLUMEN Y SU SLIDER (Desplazado a la derecha) ---
-    cmd_track(150, 90, 180, 15, TAG_SLIDER);
-
-    if (tag_pulsado == TAG_SLIDER){
-        seleccion = ((uint32_t)raw_val * 255U) / 65535U;
-    }
-
-    // Dibujar el slider de volumen
-    EscribeRam32(TAG(TAG_SLIDER));
-    ComColor(100, 100, 100);
-    ComFgcolor(200, 200, 200);
-    ComBgcolor(30, 30, 30);
-    cmd_slider(150, 90, 180, 10, 0, seleccion, 255);
-    EscribeRam32(TAG(255));
-
-    // Cajón de volumen al lado del slider
-    ComColor(0, 0, 0);
-    ComRect(340, 82, 420, 108, true);
-    ComColor(255, 255, 255);
-    ComRect(342, 84, 418, 106, true);
-
-    ComColor(0, 0, 0);
-    sprintf(cadena, "VOL: %.0f%%", (float)seleccion * 100.0f / 255.0f);
-    ComTXT(345, 87, 26, 0, cadena);
-
-
-    // --- 3. DIBUJO DEL TECLADO MUSICAL CON COLOR DINÁMICO ---
-    contador_paso++;
-    if (contador_paso >= 40) {
-        contador_paso = 0;
-        estado_color++;
-        if (estado_color > 2) {
-            estado_color = 0;
-        }
-    }
-
-    EscribeRam32(CMD_GRADCOLOR);
-    switch (estado_color) {
-    case 0: // ROJO
-        EscribeRam32(0xFF0000);
-        break;
-    case 1: // VERDE
-        EscribeRam32(0x00FF00);
-        break;
-    case 2: // AZUL
-        EscribeRam32(0x0000FF);
-        break;
-    }
-
-    ComTeclas((HSIZE-HSIZE*3/4)/2, VSIZE-VSIZE/4-15, (HSIZE * 3)/4-10, VSIZE/4-10, 31, 0, "CDEFGAB");
-    EscribeRam32(CMD_GRADCOLOR);
-    EscribeRam32(0x00555555);
-
-
-    // --- 4. LECTURA TÁCTIL Y AUDIO (APLICANDO OCTAVA) ---
-    tecla_pulsada = Lee_Reg8(REG_TOUCH_TAG);
-
-    if (tag_pulsado != TAG_SLIDER && tag_pulsado != TAG_GAUGE && tecla_pulsada != 0 && tecla_pulsada != 255) {
-        if (tecla_pulsada != tecla_anterior) {
-            VolNota(seleccion);
-
-            int nota_base = 0;
-            switch (tecla_pulsada) {
-            case 'C': nota_base = N_DO; break;
-            case 'D': nota_base = N_RE; break;
-            case 'E': nota_base = N_MI; break;
-            case 'F': nota_base = N_FA; break;
-            case 'G': nota_base = N_SOL; break;
-            case 'A': nota_base = N_LA; break;
-            case 'B': nota_base = N_SI; break;
-            default: break;
-            }
-
-            // Reproducir nota sumando los semitonos de octava (-12, 0 o +12)
-            TocaNota(S_PIANO, nota_base + octava_semitonos);
-            tecla_anterior = tecla_pulsada;
-        }
-    } else {
-        if (tag_pulsado != TAG_GAUGE && tecla_anterior != 0) {
-            FinNota();
-            tecla_anterior = 0;
-        }
-    }
-}
 
 int demoJuego1(void) {
     int estado = 0;

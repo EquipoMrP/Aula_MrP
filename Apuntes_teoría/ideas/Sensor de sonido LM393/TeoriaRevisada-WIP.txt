@@ -76,7 +76,7 @@ Los sensores de sonido, en especial los\n
 basados en electret, son utilizados en gran\n
 variedad de ambitos.\n
 Deteccion de personas, grabacion de sonidos,\n
-analisis de onda, deteccion de ruido, etc.\n
+analisis de onda, deteccion de ruido, etc.
 
 * Foto de los ejemplos *
 

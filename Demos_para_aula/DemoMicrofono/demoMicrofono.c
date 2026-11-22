@@ -57,7 +57,7 @@ void IntTimer(void)
 }
 
 
-#define MICROFONO_ON GPIOPinRead(GPIO_PORTE_BASE,GPIO_PIN_3)
+#define MICROFONO_ON !GPIOPinRead(GPIO_PORTP_BASE,GPIO_PIN_1)
 
 void dibujarFondo(int id);
 void dibujarMrP(int x, int y, char idEmocion, char gafas, char cuerpo, char idAnimacion);
@@ -82,9 +82,9 @@ int main(void) {
     TimerEnable(TIMER0_BASE, TIMER_A);
 
     //Perifericos sensores digitales
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
-    GPIOPinTypeGPIOInput(GPIO_PORTE_BASE, GPIO_PIN_3);   //E3: entrada
-    GPIOPadConfigSet(GPIO_PORTE_BASE,GPIO_PIN_3,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU); //Pullup en E3
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOP);
+    GPIOPinTypeGPIOInput(GPIO_PORTP_BASE, GPIO_PIN_1);   //P1: entrada
+    GPIOPadConfigSet(GPIO_PORTP_BASE,GPIO_PIN_1,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU); //Pullup en P1
 
     //UART
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);

@@ -90,6 +90,15 @@ main.obj: C:/QNX/TivaWare/inc/hw_usb.h
 main.obj: C:/QNX/TivaWare/inc/hw_watchdog.h
 main.obj: C:/QNX/TivaWare/utils/uartstdio.h
 main.obj: ../FT800_TIVA.h
+main.obj: ../HAL_I2C.h
+main.obj: ../sensorlib2.h
+main.obj: ../touch.h
+main.obj: ../tsop1838.h
+main.obj: ../teclado.h
+main.obj: ../hcsr04.h
+main.obj: ../ds3231.h
+main.obj: C:/Users/manug/Desktop/GIERM/4o/SEPA/Proyecto/ElDiaDeLaUnidad/MrpDemosLib.h
+main.obj: C:/Users/manug/Desktop/GIERM/4o/SEPA/Proyecto/ElDiaDeLaUnidad/MrpEscenariosLib.h
 
 ../main.c:
 
@@ -270,4 +279,22 @@ C:/QNX/TivaWare/inc/hw_watchdog.h:
 C:/QNX/TivaWare/utils/uartstdio.h:
 
 ../FT800_TIVA.h:
+
+../HAL_I2C.h:
+
+../sensorlib2.h:
+
+../touch.h:
+
+../tsop1838.h:
+
+../teclado.h:
+
+../hcsr04.h:
+
+../ds3231.h:
+
+C:/Users/manug/Desktop/GIERM/4o/SEPA/Proyecto/ElDiaDeLaUnidad/MrpDemosLib.h:
+
+C:/Users/manug/Desktop/GIERM/4o/SEPA/Proyecto/ElDiaDeLaUnidad/MrpEscenariosLib.h:
 

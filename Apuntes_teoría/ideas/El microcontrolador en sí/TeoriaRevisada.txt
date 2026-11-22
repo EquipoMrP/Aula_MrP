@@ -2,22 +2,41 @@
 TM4C 1294...
 
 %% Primera pantalla, introduccion
-Los sensores de TI de la serie TIVA C tienen un alto rendimiendo y poseen una libreria de software comprensiva.
+Los sensores de TI de la serie TIVA C tienen\n
+un alto rendimiendo y poseen una libreria de\n
+software comprensiva.
 
 %% Segunda parte, Caracteristicas
 
-El sensor TM4C1294ncpdt forma parte de la Texas Instrument TIVA SERIES C, con un nucleo ARM Cortex M4F.
-Esto significa que tiene altas prestaciones; es capaz de utilizar logica de punto flotante y capacidad de instrucciones DSP (Digital Signal Processing).
-Ademas, tiene amplias librerias de software preparadas para su uso.
+El sensor TM4C1294ncpdt forma parte de la\n
+Texas Instrument TIVA SERIES C, con un nucleo\n
+ARM Cortex M4F.\n
+Esto significa que tiene altas prestaciones; es\n
+capaz de utilizar logica de punto flotante y\n
+capacidad de instrucciones DSP (Digital\n
+Signal Processing).\n
+Ademas, tiene amplias librerias de software\n
+preparadas para su uso.\n\n
 
-El micro posee ademas de 1MB FLASH, 256kB de RAM y 6kB de EEPROM
-Tiene modulo PWM con 4 parejas de salidas, 8 timers de 13 a 32 bits, etc.
+El micro posee ademas de 1MB FLASH,\n
+256kB de RAM y 6kB de EEPROM.\n
+Tiene modulo PWM con 4 parejas de salidas,\n
+8 timers de 13 a 32 bits, etc.\n\n
 
-En resumen, es un microcontrolador versatil, optimo para la implementacion de soluciones de bajo coste.
+En resumen, es un microcontrolador versatil,\n
+optimo para la implementacion de soluciones de\n 
+bajo coste.
 
 %% Tercera parte (Ventajas/Desventajas)
-Sus buenas prestaciones en comparacion a su precio son un buen punto a favor, ademas de los recursos proporcionados por Texas Instrument.
-Sin embargo, posee un grave problema, y es que la familia de TM4C129x esta poco a poco qudandose obsoleta, y todos estos recursos iran perdiendo valor.
+Sus buenas prestaciones en comparacion a su\n
+precio son un buen punto a favor, ademas de los 
+recursos proporcionados por Texas Instrument.\n
+Sin embargo, posee un grave problema, y es que\n
+la familia de TM4C129x esta poco a poco\n
+qudandose obsoleta, y todos estos recursos iran 
+perdiendo valor.
 
 %% Cuarta parte (Uso)
-En definitiva, es un Microcontrolador optimo para soluciones de bajo coste y para el rapido prototipado.
+En definitiva, es un Microcontrolador optimo\n
+para soluciones de bajo coste y para el rapido\n
+prototipado.

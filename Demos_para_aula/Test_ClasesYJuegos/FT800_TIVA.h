@@ -379,6 +379,7 @@ char Boton(int x, int y, int w, int h, int font, char *cadena);
 void ComRect(int x1, int y1, int x2, int y2, char relleno);
 void ComCirculo(int x, int y, int r);
 void ComLine(int x1, int y1, int x2, int y2, int ancho);
+void cmd_clock(int16_t x, int16_t y, int16_t r, uint16_t options, uint16_t h, uint16_t m, uint16_t s, uint16_t ms);
 
 
 void Espera_pant(void);
@@ -395,5 +396,13 @@ void Fadein(void);
 void Conf_Pin(char p, char bit, char inout);
 void Apaga(char p, char bit);
 
+// Funciones nuevas
+void ComGradColor(long color);
+void cmd_gauge(int16_t x, int16_t y, int16_t r, uint16_t options, uint16_t major, uint16_t minor, uint16_t val, uint16_t range);
+void cmd_progress(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t options, uint16_t val, uint16_t range);
+void cmd_slider(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t options, uint16_t val, uint16_t range);
+void cmd_track(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t tag);
+void cmd_dial(int16_t x, int16_t y, int16_t r, uint16_t options, uint16_t val);
 
+// Fin funciones nuevas
 #endif // __FT800_TIVA_H__

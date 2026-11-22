@@ -1,0 +1,10 @@
+"./HAL_I2C.obj"
+"./MrpEscenariosLib.obj"
+"./demoFoto.obj"
+"./ft800_TIVA.obj"
+"./imgs.obj"
+"./tm4c1294ncpdt_startup_ccs.obj"
+"./uartstdio.obj"
+"C:/QNX/TivaWare/driverlib/ccs/Debug/driverlib.lib"
+"../tm4c1294ncpdt.cmd"
+-llibc.a

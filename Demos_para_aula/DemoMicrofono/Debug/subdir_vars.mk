@@ -13,42 +13,42 @@ C:/QNX/TivaWare/driverlib/ccs/Debug/driverlib.lib
 
 C_SRCS += \
 ../HAL_I2C.c \
-../demoMicrofono.c \
+../demoJoystick.c \
 ../ft800_TIVA.c \
 ../tm4c1294ncpdt_startup_ccs.c \
 C:/QNX/TivaWare/utils/uartstdio.c 
 
 C_DEPS += \
 ./HAL_I2C.d \
-./demoMicrofono.d \
+./demoJoystick.d \
 ./ft800_TIVA.d \
 ./tm4c1294ncpdt_startup_ccs.d \
 ./uartstdio.d 
 
 OBJS += \
 ./HAL_I2C.obj \
-./demoMicrofono.obj \
+./demoJoystick.obj \
 ./ft800_TIVA.obj \
 ./tm4c1294ncpdt_startup_ccs.obj \
 ./uartstdio.obj 
 
 OBJS__QUOTED += \
 "HAL_I2C.obj" \
-"demoMicrofono.obj" \
+"demoJoystick.obj" \
 "ft800_TIVA.obj" \
 "tm4c1294ncpdt_startup_ccs.obj" \
 "uartstdio.obj" 
 
 C_DEPS__QUOTED += \
 "HAL_I2C.d" \
-"demoMicrofono.d" \
+"demoJoystick.d" \
 "ft800_TIVA.d" \
 "tm4c1294ncpdt_startup_ccs.d" \
 "uartstdio.d" 
 
 C_SRCS__QUOTED += \
 "../HAL_I2C.c" \
-"../demoMicrofono.c" \
+"../demoJoystick.c" \
 "../ft800_TIVA.c" \
 "../tm4c1294ncpdt_startup_ccs.c" \
 "C:/QNX/TivaWare/utils/uartstdio.c" 

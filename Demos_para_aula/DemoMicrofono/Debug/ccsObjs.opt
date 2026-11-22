@@ -1,5 +1,5 @@
 "./HAL_I2C.obj"
-"./demoMicrofono.obj"
+"./demoJoystick.obj"
 "./ft800_TIVA.obj"
 "./tm4c1294ncpdt_startup_ccs.obj"
 "./uartstdio.obj"

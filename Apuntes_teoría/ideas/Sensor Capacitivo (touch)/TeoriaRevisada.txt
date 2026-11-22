@@ -9,8 +9,7 @@ acercan ciertas superficies, como los dedos.
 %% Segunda parte (teoria canónica - ¿Como funciona?)
 
 Los sensores capacitivos constan de un\n
-oscilador de ondas electromagneticas y un\n
-circuito receptor.\n\n
+oscilador de ondas electromagneticas y un\ncircuito receptor.\n\n
 
 Al acercar el dedo u otra superficie para la\n
 que el sensor este preparado, actuamos sobre el\n
@@ -18,7 +17,8 @@ circuito como si anadieramos una capacidad\n
 parasita que modifica la recepcion de las\n
 ondas emitidas. 
 
-Estudiando su variacion el sensor determina si se encuentra "pulsado" o no.
+Estudiando su variacion, el sensor determina\n
+si se encuentra "pulsado" o no.
 
 * No se si poner foto aquí, maybe tema 6 pag 17*
 
