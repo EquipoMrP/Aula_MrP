@@ -1,0 +1,64 @@
+%% Primera parte (introducción a la matriz)
+
+Los teclados matriciales suponen una sencilla\n
+manera para que el usuario interactue con el\n
+sistema.
+
+*Fotos de matrices*
+
+
+%% Segunda pizarra (teoria canónica - ¿Como funciona?)
+
+El fundamento de funcionamiento detras de un\n
+teclado matricial es la interconexion entre\n
+los pines de los botones de la matriz.\n
+Segun la fila y columna detectada se puede\n
+determinar el boton presionado.\n\n
+
+Por ejemplo, para una matriz 4x4 se usarian\n
+8 pines, 4 dedicados a las filas, las cuales\n
+son terminal positivo, y 4 dedicados a las\n
+columnas, los cuales reciben la senal.\n
+Cuando se pulsa un digito, se cierra el\n
+circuito y se detecta la fila y columna\n
+presionada.\n
+Su funcionamiento es parecido al del juego de\n
+hundir la flota.
+
+* Poner dibujo de la matriz por dentro*
+
+%% Tercera parte (ventajas)
+
+Los teclados matriciales son baratos de\n
+construir e intuitivos de usar.\n
+Son capaces de detectar cuando multiples botones\n 
+son presionados, permitiendonos trabajar con\n
+combinaciones de pulsaciones.\n\n
+
+Si el teclado es de membrana, es silencioso.\n
+Si es mecanico, es muy longevo y fiable.\n\n
+
+Su principal desventaja es su desgaste; tarde o\n
+temprano los botones dejan de funcionar.\n
+Por ultimo, al tratarse de botones, es\n
+importante implementar un filtro de debouncing\n
+en la recepcion.
+
+* Foto de los ejemplos *
+
+%% Cuarta parte (Usos)
+
+Los teclados matriciales son muy utiles cuando\n
+se necesita leer multitud de botones\n
+pertenecientes a un mismo sistema.\n
+Ademas, son baratos y fiables, por tanto\n
+podemos encontrarlos en muchos dispositivos\n
+comunes, ya sean telefonos de casa, mandos de\n
+television o teclados completos como los de\n
+los ordenadores.
+
+
+%% Demo
+Se puede hacer o un telefono y metemos detalles curiosos
+Se puede hacer un proto-hundir la flota
+

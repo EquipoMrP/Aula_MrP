@@ -1,0 +1,189 @@
+%% NOMBRE:
+Sensors Boosterpack
+
+%% Primera parte (introducción al boosterpack)
+A nuestro microcontrolador se le pueden anadir\n
+distintas ampliaciones llamados "boosterpacks". 
+Uno bastante util es el Sensors Boosterpack.
+
+*Fotos del boosterpack*
+
+
+%% Segunda parte (teoria canónica - ¿Que sensores incluye?)
+El Sensors Boosterpack contiene:\n
+OPT3001: Sensor de luz\n
+TMP007: Sensor de Temperatura\n
+BME280: Sensor ambiental (temperatura,\npresion y humedad)\n
+BMI160: Acelerometro 3D y giroscopo 3D\n
+BMM130: Magnetometro 3D\n\n
+- OPT3001\n
+Sensor de intensidad luminosa calibrado para\n
+captar la luz con una respuesta espectral casi\n
+identica a la del ojo humano.\n
+Es capaz de medir luz dentro del espectro\n
+visible y tiene una alta reduccion del\n
+espectro infrarrojo.\n
+El sensor consiste en un fotodiodo conectado a\n
+un amplificador y un convertidor analogico\n
+digital.\n\n
+
+Los fotodiodos son diodos con la union PN\n
+enriquecida con metales que fomentan que al\n
+recibir un foton se genere un par\n
+electron-hueco, provocando una diminuta\n
+corriente.\n\n\n
+
+- TMP007\n
+Sensor termopila de infrarrojos preparado\n
+para medir la temperatura de un objeto a\n
+distancia, sin tocarlo.\n
+La termopila integrada absorbe la energia\n
+infrarroja emitida por el objeto visible y\n
+genera un voltaje que luego se traduce a un\n
+valor digital.\n\n
+
+Una termopila es un transductor que transforma\n
+energia termica en electrica, consistiendo en\n
+una serie de termopares conectados en cascada.\n
+Cada termopar, dos cables de metales\n
+termoconductores diferentes soldados, generara\n
+una leve diferencia de tension en base a la\n
+diferencia de temperatura entre ambos metales\n
+gracias al efecto Seeback.\n
+Al colocarlos en serie, esta diferencia de\n
+voltaje aumenta considerablemente, permitiendo\n
+medir la diferencia de temperatura con menor\n
+necesidad de adaptacion.\n\n
+
+Es importante notar que mide diferencias de\n
+temperatura, no temperatura absoluta.\n
+Requiere establecer su propia temperatura\n
+interna, y en base a ello estima la\n
+temperatura absoluta.\n
+Para esto, periodicamente la estima partiendo\n
+del ultimo valor medido, o del de calibracion\n
+al inicializarse.\n\n\n
+
+- BME280\n
+Sensor de medidas ambientales, una combinacion\n
+de sensores digitales de temperatura, presion\n
+y porcentaje de humedad.\n\n
+
+El sensor de presion es un barometro absoluto,\n
+utilizando un sensor piezoelectrico cuya\n
+resistencia varia con la presion aplicada.\n
+La temperatura la mide con fotodiodo calibrado\n
+para radiacion termica.\n
+Por ultimo, el porcentaje de humedad lo\n
+mide monitorizando la variacion de capacidad\n
+en un condensador, que varia con la\n
+humedad ambiental.\n\n\n
+
+- BMI160\n
+Sensor de medidas inerciales compuesto de un\n
+acelerometro de tres ejes y un giroscopio.\n
+
+El giroscopio trata de una rueda loca montada\n
+en un gimbal, pudiendo rotar libremente en\n
+cualquier direccion.\n
+Cuando la estructura rota, esta vibra, y eso\n
+se mide con un sensor piezoelectrico y se\n
+traduce a la velocidad angular de cada eje.\n\n
+
+El acelerometro consiste en una lijera masa\n
+sostenida mediante estructuras elasticas\n
+enganchadas a partes de un condensador.\n
+Al haber una aceleracion, la masa se desplaza,\n
+moviendo la estructura y afectando a la\n
+capacitancia, esta se puede luego medir.\n\n\n
+
+
+- BMM150\n
+Este ultimo sensor es un magnetometro de tres\n
+ejes, es decir, mide su rotacion gracias al\n
+campo magnetico.\n
+Internamente trae un acelerometro de\n
+3 ejes complementario.\n\n
+
+El fundamento del sensor geomagnetico se basa\n
+en la tecnologia de Bosch; 'FlipCore'.\n
+Se tienen circuitos representando los ejes\n
+X, Y y Z, todos ellos sensibles al campo\n
+magnetico terrestre.\n
+Al cambiar la orientacion, cambia el flujo\n
+magnetico, y por tanto cambia la salida de\n
+cada uno de los circuitos.\n
+Cada vez que se va a tomar una medida, se toma\n
+una medida con la corriente de los circuitos\n
+fluyendo en un sentido, y otra medida en\n
+sentido contrario.\n
+A partir de estos resultados se estima\n
+la orientacion.
+
+
+
+%% Tercera parte (Ventajas desventajas)  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+- OPT3001\n
+La intencion de este sensor es la de medir la\n
+luz como lo haria un ojo humano, cosa que nos\n
+permite utilizarlo para crear experiencias de\n
+iluminacion ideales.\n
+El hecho de que rechaze la radiacion infrarroja 
+permite que sea util aun en espacios poco\n
+iluminados pero con radiacion IR, cosa que\n
+otros sensores de luz mas comunes no pueden\n
+hacer\n
+Intentar utilizar este sensor fuera de este\n
+rango de uso conllevara a resultados poco\n
+utiles; por ejemplo no va a medir de manera\n
+veridica la intensidad de una luz, sino la\n
+intensidad que percibe un ojo humano.\n\n
+
+- TMP007\n
+Este sensor es complicado de utilizar, pues\n
+requiere una calibracion precisa y un buen\n
+conocimiento de las ecuaciones que rigen su\n
+comportamiento para poder traducir su salida.\n
+A cambio, es un sensor de buena precision para\n
+la toma de temperaturas sin contacto,\n
+recomendado para monitorizar baterias,\n
+ordenadores o impresoras laser.\n\n
+
+- BME280\n
+El BME260 tiene buena precision en todos las\n
+medidas dentro de un rango de funcionamiento\n
+normal, en condiciones ambientales y no dentro\n
+de un horno o una piscina.\n
+Su intencion es la de su aplicacion en el\n
+control necesario en domotica.\n\n
+
+- BMI160\n
+Esta unidad de medidas ha sido preparada con\n
+la intencion de tener un consumo minusculo,\n
+pudiendose incluso complementar con un\n
+magnetometro externo para ayudar a su calculo\n
+y reducir aun mas su consumo.\n
+Esta pensado para integrarse a telefonos u\n
+otros accesorios electronicos.\n\n
+
+- BMM150\n
+Gracias a su bajo consumo y a su velocidad,\n
+se utiliza para calibrar acelerometros o como\n
+giroscopio para dispositivos moviles.\n
+Su principal limitacion es que su rango no es\n
+infinito, y cuando supera un limite\n
+simplemente devuelve ese valor limite.
+
+%% Final pizarra (uso)   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+En definitiva, este boosterpack contiene una\n
+gran cantidad de sensores, todos ellos\n
+preparados para trabajar en condiciones\n
+similares a nuestro dia a dia.\n
+Esto los hace muy buenos para cualquier\n
+aplicacion domestica, o incluso para la\n
+ensenanza.
+
+%% Demo
+Sensores y valores, maybe algo como medidor de burbuja para el giro
+Luz maybe una bombilla
+
